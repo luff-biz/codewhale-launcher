@@ -1,0 +1,57 @@
+.cw-panel-box {
+    spacing: 4px;
+}
+
+.cw-panel-label {
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.cw-header {
+    spacing: 8px;
+    padding: 2px 4px;
+}
+
+.cw-header-title {
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.cw-header-updated {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.cw-refresh-btn {
+    padding: 4px;
+    border-radius: 6px;
+}
+
+.cw-refresh-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.cw-status-box {
+    spacing: 2px;
+    padding: 2px 4px;
+}
+
+.cw-balance {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.cw-costs {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.cw-item-icon {
+    margin-right: 8px;
+}
+
+.cw-session-meta {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.45);
+    margin-left: 16px;
+}
