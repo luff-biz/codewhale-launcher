@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Installiert/aktualisiert die Codewhale-Launcher-Extension für den aktuellen Benutzer.
+# Installs/updates the Codewhale Launcher extension for the current user.
 set -euo pipefail
 
 UUID="codewhale-launcher@luff.biz"
@@ -10,12 +10,12 @@ mkdir -p "$DEST"
 rsync -a --delete "$SRC"/ "$DEST"/
 chmod +x "$DEST/helper/panel-data.py"
 
-echo "Installiert nach: $DEST"
+echo "Installed to: $DEST"
 
 if gnome-extensions enable "$UUID" 2>/dev/null; then
-    echo "Extension aktiviert."
+    echo "Extension enabled."
 else
-    echo "Konnte noch nicht aktiviert werden — bei Erstinstallation unter Wayland:"
-    echo "  1. Ab- und wieder anmelden"
+    echo "Could not enable yet — on first install under Wayland:"
+    echo "  1. Log out and back in"
     echo "  2. gnome-extensions enable $UUID"
 fi

@@ -1,28 +1,30 @@
 # Codewhale Launcher
 
-GNOME-Shell-Extension: [Codewhale](https://github.com/)-Sessions direkt aus der oberen
-Leiste starten und fortsetzen — ohne Terminal öffnen, `cd`, `codewhale resume …` —
-plus Guthaben und Verbrauch im Blick.
+*[Deutsche Version](README.de.md)*
 
-## Funktionen
+GNOME Shell extension: start and resume [Codewhale](https://github.com/) sessions
+straight from the top bar — no opening a terminal, `cd`-ing into the project,
+`codewhale resume …` — plus your balance and usage costs at a glance.
 
-- **Panel-Anzeige**: Wal-Icon + aktuelles Guthaben des Providers
-  (grün / gelb unter 5 $ / rot unter 1 $)
-- **Neue Session…**: Verzeichnis-Dialog (neue Ordner lassen sich im Dialog anlegen),
-  danach startet `codewhale` in einem neuen Terminal-Fenster im gewählten Verzeichnis
-- **Letzte Sessions**: die 8 jüngsten Sessions mit Titel, Projekt und Alter —
-  ein Klick führt `codewhale resume <id>` im richtigen Workspace aus
-- **Kosten heute / 7 Tage**: aggregiert aus dem lokalen Codewhale-Session-Store
+## Features
 
-## Voraussetzungen
+- **Panel display**: whale icon + current provider balance
+  (green / yellow below $5 / red below $1)
+- **New session…**: directory dialog (new folders can be created right in the
+  dialog), then `codewhale` starts in a new terminal window in the chosen directory
+- **Recent sessions**: the 8 most recent sessions with title, project, and age —
+  one click runs `codewhale resume <id>` in the right workspace
+- **Costs today / 7 days**: aggregated from the local Codewhale session store
 
-| Was | Warum |
+## Requirements
+
+| What | Why |
 |---|---|
-| GNOME Shell 47–50 | Extension-API |
-| `codewhale` CLI im `PATH` | Sessions, Resume, API-Key-Weitergabe |
-| Python ≥ 3.11 | Daten-Helper (`tomllib`) |
-| `ptyxis` (Fedora-Standard-Terminal) | öffnet die Sessions |
-| `zenity` | Verzeichnis-Dialog für neue Sessions |
+| GNOME Shell 47–50 | extension API |
+| `codewhale` CLI in `PATH` | sessions, resume, API key hand-off |
+| Python ≥ 3.11 | data helper (`tomllib`) |
+| `ptyxis` (Fedora's default terminal) | opens the sessions |
+| `zenity` | directory dialog for new sessions |
 
 ## Installation
 
@@ -32,81 +34,77 @@ cd codewhale-launcher
 ./install.sh
 ```
 
-Bei der **Erstinstallation** unter Wayland: einmal ab- und wieder anmelden, dann
+On the **first install** under Wayland: log out and back in once, then
 
 ```sh
 gnome-extensions enable codewhale-launcher@luff.biz
 ```
 
-Spätere Updates: einfach erneut `./install.sh` — unter Wayland wirkt der neue Code
-erst nach Ab-/Anmelden, unter X11 reicht `Alt+F2` → `r`.
+Later updates: just run `./install.sh` again — under Wayland the new code takes
+effect after logging out and back in, under X11 `Alt+F2` → `r` is enough.
 
-## Provider-Unterstützung
+## Provider support
 
-Die Extension ist **nicht** auf DeepSeek festgenagelt. Der aktive Provider wird aus
-der Codewhale-Konfiguration gelesen (`~/.codewhale/config.toml`, Schlüssel
-`provider`) und im Menü-Kopf angezeigt.
+The extension is **not** hardwired to DeepSeek. The active provider is read from
+the Codewhale configuration (`~/.codewhale/config.toml`, key `provider`) and shown
+in the menu header.
 
-- **Sessions, Resume, neue Sessions, Kostenanzeige** funktionieren mit **jedem**
-  Provider — sie nutzen nur die Codewhale-CLI und den lokalen Session-Store.
-- **Guthaben-Abfrage** braucht eine Balance-API des Providers. Hinterlegt ist bisher:
+- **Sessions, resume, new sessions, and the cost display** work with **any**
+  provider — they only use the Codewhale CLI and the local session store.
+- **Balance lookup** needs a balance API on the provider's side. Currently wired up:
 
-  | Provider | Guthaben | Quelle |
+  | Provider | Balance | Source |
   |---|---|---|
   | `deepseek` | ✅ | `GET https://api.deepseek.com/user/balance` |
-  | alle anderen | ➖ Panel zeigt stattdessen die Tageskosten | — |
+  | all others | ➖ the panel shows today's costs instead | — |
 
-  Weitere Provider lassen sich in `helper/panel-data.py` ergänzen
-  (`BALANCE_PROVIDERS` + `parse_balance()`). Der API-Key kommt dabei immer über
-  `codewhale auth print-api-key --provider <name>` — die Extension speichert oder
-  zeigt nie einen Key.
+  Additional providers can be added in `helper/panel-data.py`
+  (`BALANCE_PROVIDERS` + `parse_balance()`). The API key is always obtained via
+  `codewhale auth print-api-key --provider <name>` — the extension never stores
+  or displays a key.
 
-## ⚠️ Bekannte Näherungen und Grenzen — bitte vor Nutzung lesen
+## ⚠️ Known approximations and limitations — please read before relying on it
 
-1. **Kostenzuordnung ist eine Näherung.** Der Codewhale-Session-Store hält nur die
-   *Gesamtkosten je Session*, keine Tagesscheiben. Eine Session zählt daher
-   vollständig zu dem Tag, an dem sie **zuletzt aktualisiert** wurde. Beispiel: eine
-   Session, die Montag 4 $ und Dienstag 1 $ verbraucht, erscheint am Dienstag mit
-   5 $ unter „Heute". Für Buchhaltung/Abrechnung sind die Zahlen des Providers
-   maßgeblich, nicht diese Anzeige.
-2. **„7 Tage" ist ein rollierendes Fenster** über `updated_at` der Sessions — mit
-   derselben Zuordnungs-Näherung wie oben.
-3. **Guthaben ≠ Limit.** Pay-as-you-go-Provider wie DeepSeek haben keine
-   Nutzungslimits mit Reset-Fenstern (wie z. B. Claude-Abos); angezeigt wird das
-   Konto-Guthaben in USD. Die Warnschwellen (5 $ / 1 $) sind Konstanten in
-   `extension.js`.
-4. **Aktualisierung** alle 10 Minuten, zusätzlich beim Menü-Öffnen (wenn Daten
-   älter als 60 s) und per Refresh-Knopf — die Anzeige kann also bis zu 10 Minuten
-   hinterherlaufen.
-5. **UI-Sprache Deutsch**, fest verdrahtet (keine i18n in v1).
-6. **Terminal fest auf Ptyxis** verdrahtet (`_newSession`/`_resumeSession` in
-   `extension.js` anpassen für andere Terminals).
-7. Gelöschte oder verschobene Projektverzeichnisse: Resume startet dann im
-   Home-Verzeichnis statt im ursprünglichen Workspace.
+1. **Cost attribution is an approximation.** The Codewhale session store only keeps
+   *total costs per session*, not per-day slices. A session therefore counts
+   entirely towards the day it was **last updated**. Example: a session that spends
+   $4 on Monday and $1 on Tuesday shows up on Tuesday with $5 under "Today". For
+   accounting/billing, the provider's numbers are authoritative, not this display.
+2. **"7 days" is a rolling window** over the sessions' `updated_at` — with the same
+   attribution approximation as above.
+3. **Balance ≠ limit.** Pay-as-you-go providers like DeepSeek have no usage limits
+   with reset windows (like e.g. Claude subscriptions); what's shown is the account
+   balance in USD. The warning thresholds ($5 / $1) are constants in `extension.js`.
+4. **Refresh** every 10 minutes, additionally on menu open (when data is older than
+   60 s) and via the refresh button — so the display can lag by up to 10 minutes.
+5. **Terminal hardwired to Ptyxis** (adapt `_newSession`/`_resumeSession` in
+   `extension.js` for other terminals).
+6. Deleted or moved project directories: resume then starts in the home directory
+   instead of the original workspace.
 
-## Architektur
+## Architecture
 
-| Datei | Aufgabe |
+| File | Job |
 |---|---|
-| `extension.js` | UI: Panel-Button, Menü, Prozess-Starts (GJS) |
-| `helper/panel-data.py` | Datensammlung: Provider aus Config, Guthaben, Kosten, Session-Liste → ein JSON auf stdout |
-| `stylesheet.css` | Optik |
+| `extension.js` | UI: panel button, menu, process launches (GJS) |
+| `helper/panel-data.py` | data collection: provider from config, balance, costs, session list → one JSON on stdout |
+| `stylesheet.css` | looks |
 
-Die Shell-Extension enthält keine Provider- oder Netzwerk-Logik; alles Datenseitige
-steckt im Python-Helper und ist einzeln testbar:
+The shell extension contains no provider or network logic; everything data-related
+lives in the Python helper and can be tested on its own:
 
 ```sh
 ./codewhale-launcher@luff.biz/helper/panel-data.py | python3 -m json.tool
 ```
 
-## Mögliche Ausbaustufen
+## Possible next steps
 
-- GTK4/libadwaita-Companion-App für Session-Verwaltung, Kostenverlauf, Suche —
-  Extension und App teilen sich den Session-Store, nichts muss umgebaut werden.
-- Standard-Projektwurzel und Warnschwellen als Einstellungen (GSettings).
-- Balance-APIs weiterer Provider, i18n, Terminal-Wahl.
+- GTK4/libadwaita companion app for session management, cost history, search —
+  extension and app share the session store, nothing needs restructuring.
+- Default project root and warning thresholds as settings (GSettings).
+- Balance APIs for more providers, i18n (proper gettext, incl. German UI),
+  terminal choice.
 
-## Lizenz
+## License
 
 [GPL-3.0-or-later](LICENSE)
-

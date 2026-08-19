@@ -9,12 +9,12 @@ import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
 import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
 import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 
-const REFRESH_SECONDS = 600;      // Guthaben/Kosten alle 10 min
-const STALE_SECONDS = 60;         // beim Menü-Öffnen aktualisieren, wenn älter
+const REFRESH_SECONDS = 600;      // balance/costs every 10 min
+const STALE_SECONDS = 60;         // refresh on menu open when data is older
 const TITLE_MAX_CHARS = 44;
 
-const BALANCE_WARN_USD = 5.0;     // gelb darunter
-const BALANCE_CRIT_USD = 1.0;     // rot darunter
+const BALANCE_WARN_USD = 5.0;     // yellow below
+const BALANCE_CRIT_USD = 1.0;     // red below
 
 function balanceColor(usd) {
     if (usd < BALANCE_CRIT_USD)
@@ -31,12 +31,12 @@ function formatUsd(value) {
 function relativeAge(epochSecs) {
     const diff = Math.max(0, Date.now() / 1000 - epochSecs);
     if (diff < 60)
-        return 'gerade eben';
+        return 'just now';
     if (diff < 3600)
-        return `vor ${Math.floor(diff / 60)} min`;
+        return `${Math.floor(diff / 60)} min ago`;
     if (diff < 86400)
-        return `vor ${Math.floor(diff / 3600)} h`;
-    return `vor ${Math.floor(diff / 86400)} T`;
+        return `${Math.floor(diff / 3600)} h ago`;
+    return `${Math.floor(diff / 86400)} d ago`;
 }
 
 function shortWorkspace(path) {
@@ -114,16 +114,16 @@ class CodewhaleIndicator extends PanelMenu.Button {
 
         const statusItem = new PopupMenu.PopupBaseMenuItem({reactive: false, can_focus: false});
         const statusBox = new St.BoxLayout({vertical: true, style_class: 'cw-status-box', x_expand: true});
-        this._balanceLabel = new St.Label({text: 'Guthaben: –', style_class: 'cw-balance'});
+        this._balanceLabel = new St.Label({text: 'Balance: –', style_class: 'cw-balance'});
         statusBox.add_child(this._balanceLabel);
-        this._costLabel = new St.Label({text: 'Heute: – · 7 Tage: –', style_class: 'cw-costs'});
+        this._costLabel = new St.Label({text: 'Today: – · 7 days: –', style_class: 'cw-costs'});
         statusBox.add_child(this._costLabel);
         statusItem.add_child(statusBox);
         this.menu.addMenuItem(statusItem);
 
         this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
 
-        const newItem = new PopupMenu.PopupMenuItem('Neue Session…');
+        const newItem = new PopupMenu.PopupMenuItem('New session…');
         newItem.insert_child_at_index(new St.Icon({
             icon_name: 'folder-new-symbolic',
             icon_size: 16,
@@ -132,7 +132,7 @@ class CodewhaleIndicator extends PanelMenu.Button {
         newItem.connect('activate', () => this._newSession());
         this.menu.addMenuItem(newItem);
 
-        this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem('Letzte Sessions'));
+        this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem('Recent sessions'));
         this._sessionsSection = new PopupMenu.PopupMenuSection();
         this.menu.addMenuItem(this._sessionsSection);
 
@@ -151,7 +151,7 @@ class CodewhaleIndicator extends PanelMenu.Button {
         this.menu.close();
         const script =
             'dir=$(zenity --file-selection --directory ' +
-            '--title="Codewhale: Projektverzeichnis wählen") || exit 0; ' +
+            '--title="Codewhale: choose a project directory") || exit 0; ' +
             'exec ptyxis --new-window --working-directory "$dir" -- codewhale';
         this._spawn(['/bin/bash', '-lc', script]);
     }
@@ -171,8 +171,8 @@ class CodewhaleIndicator extends PanelMenu.Button {
         try {
             Gio.Subprocess.new(argv, Gio.SubprocessFlags.NONE);
         } catch (e) {
-            logError(e, 'codewhale-launcher: Start fehlgeschlagen');
-            Main.notifyError('Codewhale Launcher', `Start fehlgeschlagen: ${e.message}`);
+            logError(e, 'codewhale-launcher: failed to launch process');
+            Main.notifyError('Codewhale Launcher', `Launch failed: ${e.message}`);
         }
     }
 
@@ -187,7 +187,7 @@ class CodewhaleIndicator extends PanelMenu.Button {
                 ['/usr/bin/python3', `${this._extension.path}/helper/panel-data.py`],
                 Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE);
         } catch (e) {
-            logError(e, 'codewhale-launcher: Helper-Start fehlgeschlagen');
+            logError(e, 'codewhale-launcher: failed to start data helper');
             this._refreshing = false;
             return;
         }
@@ -200,47 +200,47 @@ class CodewhaleIndicator extends PanelMenu.Button {
                 this._lastUpdate = new Date();
                 this._render(data);
             } catch (e) {
-                logError(e, 'codewhale-launcher: Helper-Ausgabe unlesbar');
+                logError(e, 'codewhale-launcher: unreadable helper output');
             }
         });
     }
 
     _render(data) {
-        const provider = data.provider ?? 'unbekannt';
+        const provider = data.provider ?? 'unknown';
         this._headerTitle.set_text(`Codewhale · ${provider}`);
 
         if (data.balance) {
             const usd = parseFloat(data.balance.total);
             const text = Number.isNaN(usd) ? `$${data.balance.total}` : formatUsd(usd);
             this._panelLabel.set_text(text);
-            this._balanceLabel.set_text(`Guthaben: ${text}`);
+            this._balanceLabel.set_text(`Balance: ${text}`);
             if (!Number.isNaN(usd)) {
                 const color = balanceColor(usd);
                 this._panelLabel.set_style(`color: ${color};`);
                 this._balanceLabel.set_style(`color: ${color};`);
             }
         } else if (data.balance_supported === false) {
-            // Provider ohne Guthaben-API: Panel zeigt stattdessen die Tageskosten
+            // Provider without a balance API: show today's cost in the panel instead
             this._panelLabel.set_text(formatUsd(data.cost_today_usd));
             this._panelLabel.set_style('');
-            this._balanceLabel.set_text(`Kein Guthaben-Abruf für »${provider}«`);
+            this._balanceLabel.set_text(`No balance lookup for “${provider}”`);
             this._balanceLabel.set_style('');
         } else {
             this._panelLabel.set_text('$?');
             this._panelLabel.set_style('');
             this._balanceLabel.set_text(
-                `Guthaben nicht abrufbar (${data.balance_error ?? 'unbekannt'})`);
+                `Balance unavailable (${data.balance_error ?? 'unknown'})`);
             this._balanceLabel.set_style('');
         }
 
         this._costLabel.set_text(
-            `Heute: ${formatUsd(data.cost_today_usd)} · 7 Tage: ${formatUsd(data.cost_week_usd)}`);
+            `Today: ${formatUsd(data.cost_today_usd)} · 7 days: ${formatUsd(data.cost_week_usd)}`);
 
         this._sessionsSection.removeAll();
         const sessions = data.sessions ?? [];
         if (sessions.length === 0) {
             this._sessionsSection.addMenuItem(new PopupMenu.PopupMenuItem(
-                'Keine gespeicherten Sessions', {reactive: false}));
+                'No saved sessions', {reactive: false}));
         }
         for (const session of sessions) {
             const item = new PopupMenu.PopupMenuItem(
@@ -266,7 +266,7 @@ class CodewhaleIndicator extends PanelMenu.Button {
         }
         const secs = Math.max(0, Math.round((Date.now() - this._lastUpdate.getTime()) / 1000));
         this._updatedLabel.set_text(
-            secs < 60 ? `vor ${secs} s` : `vor ${Math.floor(secs / 60)} min`);
+            secs < 60 ? `${secs} s ago` : `${Math.floor(secs / 60)} min ago`);
     }
 
     destroy() {

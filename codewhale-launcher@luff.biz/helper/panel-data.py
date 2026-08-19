@@ -1,24 +1,24 @@
 #!/usr/bin/env python3
-"""Datensammler für die Codewhale-Launcher-Extension.
+"""Data collector for the Codewhale Launcher GNOME extension.
 
-Gibt genau ein JSON-Objekt auf stdout aus:
+Prints exactly one JSON object to stdout:
 
 {
   "provider":          "deepseek",
   "balance_supported": true | false,
   "balance":           {"currency": "USD", "total": "1.93", "available": true} | null,
-  "balance_error":     "…"            (nur wenn unterstützt, aber Abruf scheiterte),
+  "balance_error":     "…"            (only when supported but the lookup failed),
   "cost_today_usd":    0.06,
   "cost_week_usd":     0.12,
   "sessions":          [{id, title, workspace, updated_epoch, cost_usd, model, messages}, …]
 }
 
-Der aktive Provider kommt aus ~/.codewhale/config.toml (Schlüssel `provider`).
-Sessions und Kosten sind provider-unabhängig; eine Guthaben-Abfrage gibt es nur
-für Provider mit Eintrag in BALANCE_PROVIDERS.
+The active provider comes from ~/.codewhale/config.toml (key `provider`).
+Sessions and costs are provider-independent; a balance lookup only exists for
+providers listed in BALANCE_PROVIDERS.
 
-Kosten sind eine Näherung: eine Session zählt vollständig zu dem Tag, an dem sie
-zuletzt aktualisiert wurde (der Session-Store hält nur Gesamtkosten je Session).
+Costs are an approximation: a session counts entirely towards the day it was
+last updated (the session store only keeps totals per session).
 """
 
 import json
@@ -34,14 +34,14 @@ CONFIG_PATH = os.path.expanduser("~/.codewhale/config.toml")
 SESSIONS_DIR = os.path.expanduser("~/.codewhale/sessions")
 MAX_SESSIONS = 8
 
-# Provider mit bekannter Guthaben-API. Neue Provider: URL ergänzen und
-# parse_balance() um das jeweilige Antwortformat erweitern.
+# Providers with a known balance API. To add one: add the URL here and extend
+# parse_balance() with the provider's response format.
 BALANCE_PROVIDERS = {
     "deepseek": "https://api.deepseek.com/user/balance",
 }
 
 UUID_JSON_RE = re.compile(r"^[0-9a-f]{8}-[0-9a-f-]{27}\.json$")
-FRACTION_RE = re.compile(r"\.(\d{6})\d+")  # fromisoformat verträgt max. 6 Nachkommastellen
+FRACTION_RE = re.compile(r"\.(\d{6})\d+")  # fromisoformat allows at most 6 fractional digits
 
 
 def parse_ts(value):
@@ -74,7 +74,7 @@ def collect_sessions():
         cost = meta.get("cost") or {}
         sessions.append({
             "id": meta.get("id") or name[:-5],
-            "title": (meta.get("title") or "(ohne Titel)").strip(),
+            "title": (meta.get("title") or "(untitled)").strip(),
             "workspace": meta.get("workspace") or "",
             "updated_epoch": ts.timestamp(),
             "cost_usd": float(cost.get("session_cost_usd") or 0.0)
@@ -127,7 +127,7 @@ def parse_balance(provider, data):
 def fetch_balance(provider):
     url = BALANCE_PROVIDERS.get(provider)
     if url is None:
-        return None, None  # Provider ohne bekannte Guthaben-API — kein Fehler
+        return None, None  # provider without a known balance API — not an error
     try:
         proc = subprocess.run(
             ["codewhale", "auth", "print-api-key", "--provider", provider],
@@ -135,15 +135,15 @@ def fetch_balance(provider):
         )
         key = proc.stdout.strip()
         if not key:
-            return None, "kein API-Key (codewhale auth print-api-key)"
+            return None, "no API key (codewhale auth print-api-key)"
         req = urllib.request.Request(url, headers={"Authorization": f"Bearer {key}"})
         with urllib.request.urlopen(req, timeout=10) as resp:
             data = json.load(resp)
         balance = parse_balance(provider, data)
         if balance is None:
-            return None, "Antwortformat unbekannt"
+            return None, "unknown response format"
         return balance, None
-    except Exception as exc:  # Netz/Timeout/CLI — Panel soll trotzdem rendern
+    except Exception as exc:  # network/timeout/CLI — the panel must still render
         return None, str(exc)
 
 
