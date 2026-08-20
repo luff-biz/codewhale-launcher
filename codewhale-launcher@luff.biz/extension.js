@@ -57,7 +57,7 @@ function truncate(text, max) {
 const CodewhaleIndicator = GObject.registerClass(
 class CodewhaleIndicator extends PanelMenu.Button {
     _init(extension) {
-        super._init(0.0, 'Codewhale Launcher');
+        super._init(0.5, 'Codewhale Launcher');
 
         this._extension = extension;
         this._lastUpdate = null;
