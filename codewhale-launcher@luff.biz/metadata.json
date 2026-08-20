@@ -3,6 +3,7 @@
   "name": "Codewhale Launcher",
   "description": "Start and resume Codewhale sessions from the top bar; shows provider balance and usage costs.",
   "shell-version": ["47", "48", "49", "50"],
+  "gettext-domain": "codewhale-launcher@luff.biz",
   "url": "https://github.com/luff-biz/codewhale-launcher",
   "version": 1
 }

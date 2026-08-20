@@ -1,0 +1,69 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: codewhale-launcher\n"
+"Report-Msgid-Bugs-To: https://github.com/luff-biz/codewhale-launcher/issues\n"
+"POT-Creation-Date: 2026-08-21 12:00+0200\n"
+"PO-Revision-Date: 2026-08-21 12:00+0200\n"
+"Last-Translator: Steffen Luff <3155294+steffenluff@users.noreply.github.com>\n"
+"Language-Team: none\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+
+#: codewhale-launcher@luff.biz/extension.js
+msgid "just now"
+msgstr "zojuist"
+
+#: codewhale-launcher@luff.biz/extension.js
+msgid "%d s ago"
+msgstr "%d s geleden"
+
+#: codewhale-launcher@luff.biz/extension.js
+msgid "%d min ago"
+msgstr "%d min geleden"
+
+#: codewhale-launcher@luff.biz/extension.js
+msgid "%d h ago"
+msgstr "%d u geleden"
+
+#: codewhale-launcher@luff.biz/extension.js
+msgid "%d d ago"
+msgstr "%d d geleden"
+
+#: codewhale-launcher@luff.biz/extension.js
+msgid "New session…"
+msgstr "Nieuwe sessie…"
+
+#: codewhale-launcher@luff.biz/extension.js
+msgid "Recent sessions"
+msgstr "Recente sessies"
+
+#: codewhale-launcher@luff.biz/extension.js
+msgid "No saved sessions"
+msgstr "Geen opgeslagen sessies"
+
+#: codewhale-launcher@luff.biz/extension.js
+msgid "Balance: %s"
+msgstr "Saldo: %s"
+
+#: codewhale-launcher@luff.biz/extension.js
+msgid "No balance lookup for “%s”"
+msgstr "Geen saldo-opvraag voor “%s”"
+
+#: codewhale-launcher@luff.biz/extension.js
+msgid "Balance unavailable (%s)"
+msgstr "Saldo niet beschikbaar (%s)"
+
+#: codewhale-launcher@luff.biz/extension.js
+msgid "Today: %s · 7 days: %s"
+msgstr "Vandaag: %s · 7 dagen: %s"
+
+#: codewhale-launcher@luff.biz/extension.js
+msgid "Codewhale: choose a project directory"
+msgstr "Codewhale: kies een projectmap"
+
+#: codewhale-launcher@luff.biz/extension.js
+msgid "Launch failed: %s"
+msgstr "Starten mislukt: %s"
