@@ -1,7 +1,7 @@
 {
   "uuid": "codewhale-launcher@luff.biz",
   "name": "Codewhale Launcher",
-  "description": "Start and resume Codewhale sessions from the top bar; shows provider balance and usage costs.",
+  "description": "Start and resume Codewhale sessions straight from the top bar.\n\n• New session via directory picker, opened in a Ptyxis terminal\n• The five most recent sessions one click away\n• Full history window (GTK4/libadwaita): search, resume, hide or permanently delete sessions\n• Provider account balance in the panel (currently DeepSeek) with color-coded warning thresholds\n• Approximate usage costs for today and the last 7 days, read from the local session store\n• Translated into 11 languages, following the system locale\n\nThe balance is fetched from the provider's balance API; the API key is obtained via the Codewhale CLI and never stored or displayed. Cost figures are approximations — see the README for details.\n\nRequires the codewhale CLI, Python ≥ 3.11, Ptyxis and zenity.",
   "shell-version": ["47", "48", "49", "50"],
   "gettext-domain": "codewhale-launcher@luff.biz",
   "url": "https://github.com/luff-biz/codewhale-launcher",
