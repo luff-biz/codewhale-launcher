@@ -117,7 +117,7 @@ Die Shell-Extension enthält keine Provider- oder Netzwerk-Logik; alles Datensei
 steckt im Python-Helper und ist einzeln testbar:
 
 ```sh
-./codewhale-launcher@luff.biz/helper/panel-data.py | python3 -m json.tool
+python3 codewhale-launcher@luff.biz/helper/panel-data.py | python3 -m json.tool
 ```
 
 ## Mögliche Ausbaustufen

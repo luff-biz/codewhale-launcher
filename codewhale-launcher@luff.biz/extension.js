@@ -155,7 +155,7 @@ class CodewhaleIndicator extends PanelMenu.Button {
         });
         this.menu.addMenuItem(historyItem);
 
-        this.menu.connect('open-state-changed', (menu, open) => {
+        this._menuOpenId = this.menu.connect('open-state-changed', (menu, open) => {
             if (!open)
                 return;
             this._updateHeaderAge();
@@ -293,6 +293,10 @@ class CodewhaleIndicator extends PanelMenu.Button {
         if (this._refreshTimer) {
             GLib.source_remove(this._refreshTimer);
             this._refreshTimer = null;
+        }
+        if (this._menuOpenId) {
+            this.menu.disconnect(this._menuOpenId);
+            this._menuOpenId = null;
         }
         super.destroy();
     }

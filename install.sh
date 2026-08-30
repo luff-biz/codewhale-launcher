@@ -9,7 +9,6 @@ DEST="$HOME/.local/share/gnome-shell/extensions/$UUID"
 
 mkdir -p "$DEST"
 rsync -a --delete "$SRC"/ "$DEST"/
-chmod +x "$DEST/helper/panel-data.py"
 
 # Compile translations (gettext domain = extension UUID)
 if command -v msgfmt >/dev/null; then

@@ -112,7 +112,7 @@ The shell extension contains no provider or network logic; everything data-relat
 lives in the Python helper and can be tested on its own:
 
 ```sh
-./codewhale-launcher@luff.biz/helper/panel-data.py | python3 -m json.tool
+python3 codewhale-launcher@luff.biz/helper/panel-data.py | python3 -m json.tool
 ```
 
 ## Possible next steps
