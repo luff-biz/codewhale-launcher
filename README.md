@@ -12,9 +12,17 @@ straight from the top bar — no opening a terminal, `cd`-ing into the project,
   (green / yellow below $5 / red below $1)
 - **New session…**: directory dialog (new folders can be created right in the
   dialog), then `codewhale` starts in a new terminal window in the chosen directory
-- **Recent sessions**: the 8 most recent sessions with title, project, and age —
+- **Recent sessions**: the 5 most recent sessions with title, project, and age —
   one click runs `codewhale resume <id>` in the right workspace
+- **Full history…**: opens a GTK4/libadwaita companion window listing *every*
+  session — searchable, click to resume. The trash button removes an entry
+  Heroic-style: by default the session is only hidden from the launcher (the
+  Codewhale store is untouched and its costs still count); an opt-in checkbox
+  with an explicit warning deletes it permanently from the store. Hidden
+  sessions can be shown again and restored via the header toggle.
 - **Costs today / 7 days**: aggregated from the local Codewhale session store
+- **Translated UI**: English plus 11 languages (de, fr, es, it, pt, nl, da, sv,
+  nb, hi, zh_CN) — the language follows the GNOME system locale automatically
 
 ## Requirements
 
@@ -25,6 +33,8 @@ straight from the top bar — no opening a terminal, `cd`-ing into the project,
 | Python ≥ 3.11 | data helper (`tomllib`) |
 | `ptyxis` (Fedora's default terminal) | opens the sessions |
 | `zenity` | directory dialog for new sessions |
+| GTK4 + libadwaita + PyGObject | full-history window (preinstalled on Fedora Workstation) |
+| `msgfmt` (gettext) | compiles the translations during `install.sh` |
 
 ## Installation
 
@@ -81,6 +91,11 @@ in the menu header.
    `extension.js` for other terminals).
 6. Deleted or moved project directories: resume then starts in the home directory
    instead of the original workspace.
+7. **Hiding vs. deleting.** Hiding a session only records its id in
+   `~/.config/codewhale-launcher/hidden.json` — the Codewhale store is untouched
+   and hidden sessions still count towards the cost display. Permanent deletion
+   removes the session file (and a same-id checkpoint file) from
+   `~/.codewhale/sessions/` — the Codewhale CLI itself has no delete command.
 
 ## Architecture
 
@@ -88,6 +103,9 @@ in the menu header.
 |---|---|
 | `extension.js` | UI: panel button, menu, process launches (GJS) |
 | `helper/panel-data.py` | data collection: provider from config, balance, costs, session list → one JSON on stdout |
+| `helper/store.py` | shared session-store access: list, hide/restore, delete |
+| `app/history.py` | GTK4/libadwaita full-history window (own process) |
+| `po/` | translations (gettext; compiled by `install.sh`) |
 | `stylesheet.css` | looks |
 
 The shell extension contains no provider or network logic; everything data-related
@@ -99,11 +117,10 @@ lives in the Python helper and can be tested on its own:
 
 ## Possible next steps
 
-- GTK4/libadwaita companion app for session management, cost history, search —
-  extension and app share the session store, nothing needs restructuring.
+- Cost history / charts in the companion app.
 - Default project root and warning thresholds as settings (GSettings).
-- Balance APIs for more providers, i18n (proper gettext, incl. German UI),
-  terminal choice.
+- Balance APIs for more providers, terminal choice.
+- Native-speaker review of the machine-generated translations.
 
 ## License
 

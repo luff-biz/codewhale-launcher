@@ -5,5 +5,5 @@
   "shell-version": ["47", "48", "49", "50"],
   "gettext-domain": "codewhale-launcher@luff.biz",
   "url": "https://github.com/luff-biz/codewhale-launcher",
-  "version": 1
+  "version": 2
 }

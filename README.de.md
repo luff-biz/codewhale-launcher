@@ -12,9 +12,18 @@ oberen Leiste starten und fortsetzen — ohne Terminal öffnen, `cd`,
   (grün / gelb unter 5 $ / rot unter 1 $)
 - **Neue Session…**: Verzeichnis-Dialog (neue Ordner lassen sich im Dialog anlegen),
   danach startet `codewhale` in einem neuen Terminal-Fenster im gewählten Verzeichnis
-- **Letzte Sessions**: die 8 jüngsten Sessions mit Titel, Projekt und Alter —
+- **Letzte Sessions**: die 5 jüngsten Sessions mit Titel, Projekt und Alter —
   ein Klick führt `codewhale resume <id>` im richtigen Workspace aus
+- **Vollständige Historie…**: öffnet ein GTK4/libadwaita-Fenster mit *allen*
+  Sessions — durchsuchbar, Klick setzt fort. Der Papierkorb entfernt einen
+  Eintrag im Heroic-Stil: standardmäßig wird die Session nur im Launcher
+  ausgeblendet (der Codewhale-Store bleibt unangetastet, die Kosten zählen
+  weiter); eine Checkbox mit ausdrücklicher Warnung löscht sie endgültig aus
+  dem Store. Ausgeblendete Sessions lassen sich über den Kopfzeilen-Schalter
+  wieder anzeigen und wiederherstellen.
 - **Kosten heute / 7 Tage**: aggregiert aus dem lokalen Codewhale-Session-Store
+- **Übersetzte Oberfläche**: Englisch plus 11 Sprachen (de, fr, es, it, pt, nl,
+  da, sv, nb, hi, zh_CN) — die Sprache folgt automatisch der GNOME-System-Locale
 
 ## Voraussetzungen
 
@@ -25,6 +34,8 @@ oberen Leiste starten und fortsetzen — ohne Terminal öffnen, `cd`,
 | Python ≥ 3.11 | Daten-Helper (`tomllib`) |
 | `ptyxis` (Fedora-Standard-Terminal) | öffnet die Sessions |
 | `zenity` | Verzeichnis-Dialog für neue Sessions |
+| GTK4 + libadwaita + PyGObject | Historie-Fenster (auf Fedora Workstation vorinstalliert) |
+| `msgfmt` (gettext) | kompiliert die Übersetzungen bei `install.sh` |
 
 ## Installation
 
@@ -84,6 +95,12 @@ der Codewhale-Konfiguration gelesen (`~/.codewhale/config.toml`, Schlüssel
    `extension.js` anpassen für andere Terminals).
 6. Gelöschte oder verschobene Projektverzeichnisse: Resume startet dann im
    Home-Verzeichnis statt im ursprünglichen Workspace.
+7. **Ausblenden vs. Löschen.** Ausblenden merkt sich nur die Session-ID in
+   `~/.config/codewhale-launcher/hidden.json` — der Codewhale-Store bleibt
+   unangetastet, ausgeblendete Sessions zählen weiter in die Kostenanzeige.
+   Endgültiges Löschen entfernt die Session-Datei (und einen gleichnamigen
+   Checkpoint) aus `~/.codewhale/sessions/` — die Codewhale-CLI selbst hat
+   keinen Lösch-Befehl.
 
 ## Architektur
 
@@ -91,6 +108,9 @@ der Codewhale-Konfiguration gelesen (`~/.codewhale/config.toml`, Schlüssel
 |---|---|
 | `extension.js` | UI: Panel-Button, Menü, Prozess-Starts (GJS) |
 | `helper/panel-data.py` | Datensammlung: Provider aus Config, Guthaben, Kosten, Session-Liste → ein JSON auf stdout |
+| `helper/store.py` | geteilter Session-Store-Zugriff: Liste, Ausblenden/Wiederherstellen, Löschen |
+| `app/history.py` | GTK4/libadwaita-Historie-Fenster (eigener Prozess) |
+| `po/` | Übersetzungen (gettext; kompiliert von `install.sh`) |
 | `stylesheet.css` | Optik |
 
 Die Shell-Extension enthält keine Provider- oder Netzwerk-Logik; alles Datenseitige
@@ -102,11 +122,10 @@ steckt im Python-Helper und ist einzeln testbar:
 
 ## Mögliche Ausbaustufen
 
-- GTK4/libadwaita-Companion-App für Session-Verwaltung, Kostenverlauf, Suche —
-  Extension und App teilen sich den Session-Store, nichts muss umgebaut werden.
+- Kostenverlauf / Diagramme im Historie-Fenster.
 - Standard-Projektwurzel und Warnschwellen als Einstellungen (GSettings).
-- Balance-APIs weiterer Provider, i18n (echtes gettext, inkl. deutscher UI),
-  Terminal-Wahl.
+- Balance-APIs weiterer Provider, Terminal-Wahl.
+- Muttersprachler-Review der maschinell erzeugten Übersetzungen.
 
 ## Lizenz
 
