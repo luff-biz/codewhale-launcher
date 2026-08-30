@@ -58,7 +58,9 @@ class HistoryWindow(Adw.ApplicationWindow):
         self._search = Gtk.SearchEntry(placeholder_text=_("Search sessions…"))
         self._search.connect("search-changed", lambda *_a: self._list.invalidate_filter())
 
-        hidden_toggle = Gtk.ToggleButton(icon_name="view-reveal-symbolic",
+        # Password-field pattern: crossed-out eye while hidden sessions are
+        # concealed, open eye while they are shown
+        hidden_toggle = Gtk.ToggleButton(icon_name="view-conceal-symbolic",
                                          tooltip_text=_("Show hidden sessions"))
         hidden_toggle.connect("toggled", self._on_toggle_hidden)
 
@@ -126,6 +128,8 @@ class HistoryWindow(Adw.ApplicationWindow):
 
     def _on_toggle_hidden(self, button):
         self._show_hidden = button.get_active()
+        button.set_icon_name("view-reveal-symbolic" if self._show_hidden
+                             else "view-conceal-symbolic")
         self._reload()
 
     def _on_row_activated(self, _list, row):
