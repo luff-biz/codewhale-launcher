@@ -17,73 +17,31 @@ The active provider comes from ~/.codewhale/config.toml (key `provider`).
 Sessions and costs are provider-independent; a balance lookup only exists for
 providers listed in BALANCE_PROVIDERS.
 
-Costs are an approximation: a session counts entirely towards the day it was
-last updated (the session store only keeps totals per session).
+Sessions hidden via the companion app are excluded from the list, but their
+costs still count — hiding is cosmetic. Costs are an approximation: a session
+counts entirely towards the day it was last updated (the session store only
+keeps totals per session).
 """
 
 import json
-import os
-import re
 import subprocess
 import sys
 import tomllib
 import urllib.request
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
+from pathlib import Path
 
-CONFIG_PATH = os.path.expanduser("~/.codewhale/config.toml")
-SESSIONS_DIR = os.path.expanduser("~/.codewhale/sessions")
-MAX_SESSIONS = 8
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import store
+
+CONFIG_PATH = Path.home() / ".codewhale" / "config.toml"
+MAX_SESSIONS = 5
 
 # Providers with a known balance API. To add one: add the URL here and extend
 # parse_balance() with the provider's response format.
 BALANCE_PROVIDERS = {
     "deepseek": "https://api.deepseek.com/user/balance",
 }
-
-UUID_JSON_RE = re.compile(r"^[0-9a-f]{8}-[0-9a-f-]{27}\.json$")
-FRACTION_RE = re.compile(r"\.(\d{6})\d+")  # fromisoformat allows at most 6 fractional digits
-
-
-def parse_ts(value):
-    if not value:
-        return None
-    value = FRACTION_RE.sub(r".\1", value).replace("Z", "+00:00")
-    try:
-        return datetime.fromisoformat(value)
-    except ValueError:
-        return None
-
-
-def collect_sessions():
-    sessions = []
-    try:
-        names = os.listdir(SESSIONS_DIR)
-    except OSError:
-        return sessions
-    for name in names:
-        if not UUID_JSON_RE.match(name):
-            continue
-        try:
-            with open(os.path.join(SESSIONS_DIR, name)) as f:
-                meta = json.load(f).get("metadata") or {}
-        except (OSError, ValueError):
-            continue
-        ts = parse_ts(meta.get("updated_at"))
-        if ts is None:
-            continue
-        cost = meta.get("cost") or {}
-        sessions.append({
-            "id": meta.get("id") or name[:-5],
-            "title": (meta.get("title") or "(untitled)").strip(),
-            "workspace": meta.get("workspace") or "",
-            "updated_epoch": ts.timestamp(),
-            "cost_usd": float(cost.get("session_cost_usd") or 0.0)
-                        + float(cost.get("subagent_cost_usd") or 0.0),
-            "model": meta.get("model") or "",
-            "messages": meta.get("message_count") or 0,
-        })
-    sessions.sort(key=lambda s: s["updated_epoch"], reverse=True)
-    return sessions
 
 
 def cost_windows(sessions):
@@ -149,8 +107,9 @@ def fetch_balance(provider):
 
 def main():
     provider = active_provider()
-    sessions = collect_sessions()
-    today, week = cost_windows(sessions)
+    sessions = store.collect_sessions()
+    today, week = cost_windows(sessions)  # hidden sessions still cost money
+    visible = [s for s in sessions if not s["hidden"]]
     balance, err = fetch_balance(provider)
     result = {
         "provider": provider,
@@ -158,7 +117,7 @@ def main():
         "balance": balance,
         "cost_today_usd": round(today, 4),
         "cost_week_usd": round(week, 4),
-        "sessions": sessions[:MAX_SESSIONS],
+        "sessions": visible[:MAX_SESSIONS],
     }
     if err:
         result["balance_error"] = err

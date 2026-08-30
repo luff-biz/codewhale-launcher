@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: codewhale-launcher\n"
 "Report-Msgid-Bugs-To: https://github.com/luff-biz/codewhale-launcher/issues\n"
 "POT-Creation-Date: 2026-08-21 12:00+0200\n"
-"PO-Revision-Date: 2026-08-21 12:00+0200\n"
+"PO-Revision-Date: 2026-08-30 12:00+0200\n"
 "Last-Translator: Steffen Luff <3155294+steffenluff@users.noreply.github.com>\n"
 "Language-Team: none\n"
 "Language: hi\n"
@@ -12,58 +12,110 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 
-#: codewhale-launcher@luff.biz/extension.js
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "just now"
 msgstr "अभी-अभी"
 
-#: codewhale-launcher@luff.biz/extension.js
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "%d s ago"
 msgstr "%d सेकंड पहले"
 
-#: codewhale-launcher@luff.biz/extension.js
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "%d min ago"
 msgstr "%d मिनट पहले"
 
-#: codewhale-launcher@luff.biz/extension.js
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "%d h ago"
 msgstr "%d घंटे पहले"
 
-#: codewhale-launcher@luff.biz/extension.js
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "%d d ago"
 msgstr "%d दिन पहले"
 
-#: codewhale-launcher@luff.biz/extension.js
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "New session…"
 msgstr "नया सत्र…"
 
-#: codewhale-launcher@luff.biz/extension.js
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "Recent sessions"
 msgstr "हाल के सत्र"
 
-#: codewhale-launcher@luff.biz/extension.js
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "No saved sessions"
 msgstr "कोई सहेजा गया सत्र नहीं"
 
-#: codewhale-launcher@luff.biz/extension.js
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "Balance: %s"
 msgstr "शेष राशि: %s"
 
-#: codewhale-launcher@luff.biz/extension.js
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "No balance lookup for “%s”"
 msgstr "“%s” के लिए शेष राशि की जानकारी उपलब्ध नहीं"
 
-#: codewhale-launcher@luff.biz/extension.js
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "Balance unavailable (%s)"
 msgstr "शेष राशि अनुपलब्ध (%s)"
 
-#: codewhale-launcher@luff.biz/extension.js
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "Today: %s · 7 days: %s"
 msgstr "आज: %s · 7 दिन: %s"
 
-#: codewhale-launcher@luff.biz/extension.js
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "Codewhale: choose a project directory"
 msgstr "Codewhale: प्रोजेक्ट निर्देशिका चुनें"
 
-#: codewhale-launcher@luff.biz/extension.js
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "Launch failed: %s"
 msgstr "शुरू करने में विफल: %s"
+
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
+msgid "Full history…"
+msgstr "पूरा इतिहास…"
+
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
+msgid "Codewhale Sessions"
+msgstr "Codewhale सत्र"
+
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
+msgid "Search sessions…"
+msgstr "सत्र खोजें…"
+
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
+msgid "Show hidden sessions"
+msgstr "छिपे हुए सत्र दिखाएँ"
+
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
+msgid "No sessions found"
+msgstr "कोई सत्र नहीं मिला"
+
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
+msgid "Restore"
+msgstr "पुनर्स्थापित करें"
+
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
+msgid "Remove “%s”?"
+msgstr "“%s” हटाएँ?"
+
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
+msgid "The session disappears from the launcher list but stays in the Codewhale store."
+msgstr "सत्र लॉन्चर सूची से हट जाएगा, लेकिन Codewhale स्टोर में बना रहेगा।"
+
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
+msgid "Also delete the session permanently from the Codewhale store"
+msgstr "सत्र को Codewhale स्टोर से भी स्थायी रूप से हटाएँ"
+
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
+msgid "This cannot be undone: the session can no longer be resumed and its costs vanish from the launcher statistics."
+msgstr "इसे पूर्ववत नहीं किया जा सकता: सत्र फिर से शुरू नहीं किया जा सकेगा और उसकी लागत लॉन्चर आँकड़ों से हट जाएगी।"
+
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
+msgid "Cancel"
+msgstr "रद्द करें"
+
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
+msgid "Remove"
+msgstr "हटाएँ"
+
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
+msgid "Could not delete: %s"
+msgstr "हटाया नहीं जा सका: %s"

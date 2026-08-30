@@ -142,6 +142,19 @@ class CodewhaleIndicator extends PanelMenu.Button {
         this._sessionsSection = new PopupMenu.PopupMenuSection();
         this.menu.addMenuItem(this._sessionsSection);
 
+        this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
+        const historyItem = new PopupMenu.PopupMenuItem(_('Full history…'));
+        historyItem.insert_child_at_index(new St.Icon({
+            icon_name: 'document-open-recent-symbolic',
+            icon_size: 16,
+            style_class: 'cw-item-icon',
+        }), 0);
+        historyItem.connect('activate', () => {
+            this.menu.close();
+            this._spawn(['/usr/bin/python3', `${this._extension.path}/app/history.py`]);
+        });
+        this.menu.addMenuItem(historyItem);
+
         this.menu.connect('open-state-changed', (menu, open) => {
             if (!open)
                 return;

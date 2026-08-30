@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: codewhale-launcher\n"
 "Report-Msgid-Bugs-To: https://github.com/luff-biz/codewhale-launcher/issues\n"
 "POT-Creation-Date: 2026-08-21 12:00+0200\n"
-"PO-Revision-Date: 2026-08-21 12:00+0200\n"
+"PO-Revision-Date: 2026-08-30 12:00+0200\n"
 "Last-Translator: Steffen Luff <3155294+steffenluff@users.noreply.github.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -11,58 +11,110 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 
-#: codewhale-launcher@luff.biz/extension.js
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "just now"
 msgstr ""
 
-#: codewhale-launcher@luff.biz/extension.js
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "%d s ago"
 msgstr ""
 
-#: codewhale-launcher@luff.biz/extension.js
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "%d min ago"
 msgstr ""
 
-#: codewhale-launcher@luff.biz/extension.js
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "%d h ago"
 msgstr ""
 
-#: codewhale-launcher@luff.biz/extension.js
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "%d d ago"
 msgstr ""
 
-#: codewhale-launcher@luff.biz/extension.js
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "New session…"
 msgstr ""
 
-#: codewhale-launcher@luff.biz/extension.js
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "Recent sessions"
 msgstr ""
 
-#: codewhale-launcher@luff.biz/extension.js
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "No saved sessions"
 msgstr ""
 
-#: codewhale-launcher@luff.biz/extension.js
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "Balance: %s"
 msgstr ""
 
-#: codewhale-launcher@luff.biz/extension.js
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "No balance lookup for “%s”"
 msgstr ""
 
-#: codewhale-launcher@luff.biz/extension.js
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "Balance unavailable (%s)"
 msgstr ""
 
-#: codewhale-launcher@luff.biz/extension.js
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "Today: %s · 7 days: %s"
 msgstr ""
 
-#: codewhale-launcher@luff.biz/extension.js
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "Codewhale: choose a project directory"
 msgstr ""
 
-#: codewhale-launcher@luff.biz/extension.js
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "Launch failed: %s"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
+msgid "Full history…"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
+msgid "Codewhale Sessions"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
+msgid "Search sessions…"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
+msgid "Show hidden sessions"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
+msgid "No sessions found"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
+msgid "Restore"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
+msgid "Remove “%s”?"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
+msgid "The session disappears from the launcher list but stays in the Codewhale store."
+msgstr ""
+
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
+msgid "Also delete the session permanently from the Codewhale store"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
+msgid "This cannot be undone: the session can no longer be resumed and its costs vanish from the launcher statistics."
+msgstr ""
+
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
+msgid "Cancel"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
+msgid "Remove"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
+msgid "Could not delete: %s"
 msgstr ""
