@@ -10,6 +10,13 @@ DEST="$HOME/.local/share/gnome-shell/extensions/$UUID"
 mkdir -p "$DEST"
 rsync -a --delete "$SRC"/ "$DEST"/
 
+# Compile the GSettings schema (dashboard settings)
+if command -v glib-compile-schemas >/dev/null; then
+    glib-compile-schemas "$DEST/schemas"
+else
+    echo "Warning: glib-compile-schemas not found — settings not compiled."
+fi
+
 # Compile translations (gettext domain = extension UUID)
 if command -v msgfmt >/dev/null; then
     for po in "$ROOT"/po/*.po; do

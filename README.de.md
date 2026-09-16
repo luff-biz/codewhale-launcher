@@ -22,6 +22,12 @@ oberen Leiste starten und fortsetzen — ohne Terminal öffnen, `cd`,
   dem Store. Ausgeblendete Sessions lassen sich über den Kopfzeilen-Schalter
   wieder anzeigen und wiederherstellen.
 - **Kosten heute / 7 Tage**: aggregiert aus dem lokalen Codewhale-Session-Store
+- **Dashboard**: ein „aktueller Status“ des Workspaces deiner Favoriten-Session
+  auf einen Klick — generiert mit `codewhale exec` und gecacht, um Tokens zu
+  sparen. Der Stern an einer Session wählt die Quelle; aktualisiert wird nur,
+  wenn sich der Workspace geändert hat oder der Cache älter als das maximale
+  Alter ist (Standard 6 h) — oder manuell über den Refresh-Knopf. Der Prompt
+  ist in den Einstellungen frei anpassbar.
 - **Übersetzte Oberfläche**: Englisch plus 11 Sprachen (de, fr, es, it, pt, nl,
   da, sv, nb, hi, zh_CN) — die Sprache folgt automatisch der GNOME-System-Locale
 
@@ -108,8 +114,11 @@ der Codewhale-Konfiguration gelesen (`~/.codewhale/config.toml`, Schlüssel
 |---|---|
 | `extension.js` | UI: Panel-Button, Menü, Prozess-Starts (GJS) |
 | `helper/panel-data.py` | Datensammlung: Provider aus Config, Guthaben, Kosten, Session-Liste → ein JSON auf stdout |
+| `helper/dashboard.py` | Dashboard: führt `codewhale exec` aus, cacht den Status, Fingerprint des Workspace → ein JSON auf stdout |
 | `helper/store.py` | geteilter Session-Store-Zugriff: Liste, Ausblenden/Wiederherstellen, Löschen |
 | `app/history.py` | GTK4/libadwaita-Historie-Fenster (eigener Prozess) |
+| `prefs.js` | Einstellungsfenster (Dashboard-Prompt, maximales Cache-Alter) |
+| `schemas/` | GSettings-Schema (Favoriten-Session, Prompt, maximales Alter) |
 | `po/` | Übersetzungen (gettext; kompiliert von `install.sh`) |
 | `stylesheet.css` | Optik |
 
@@ -120,10 +129,17 @@ steckt im Python-Helper und ist einzeln testbar:
 python3 codewhale-launcher@luff.biz/helper/panel-data.py | python3 -m json.tool
 ```
 
+`helper/dashboard.py` funktioniert genauso; ohne Favoriten-Session meldet es nur
+`no-session` (gefahrlos testbar, ohne `codewhale` aufzurufen):
+
+```sh
+python3 codewhale-launcher@luff.biz/helper/dashboard.py --session "" | python3 -m json.tool
+```
+
 ## Mögliche Ausbaustufen
 
 - Kostenverlauf / Diagramme im Historie-Fenster.
-- Standard-Projektwurzel und Warnschwellen als Einstellungen (GSettings).
+- Warnschwellen und Standard-Projektwurzel als Einstellungen (GSettings).
 - Balance-APIs weiterer Provider, Terminal-Wahl.
 - Muttersprachler-Review der maschinell erzeugten Übersetzungen.
 

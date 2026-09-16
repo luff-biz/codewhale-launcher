@@ -68,6 +68,9 @@ class CodewhaleIndicator extends PanelMenu.Button {
         this._extension = extension;
         this._lastUpdate = null;
         this._refreshing = false;
+        this._dashboardLoading = false;
+        this._lastSessions = null;
+        this._settings = extension.getSettings();
 
         const box = new St.BoxLayout({style_class: 'cw-panel-box'});
         box.add_child(new St.Icon({
@@ -81,9 +84,19 @@ class CodewhaleIndicator extends PanelMenu.Button {
             style_class: 'cw-panel-label',
         });
         box.add_child(this._panelLabel);
+
+        this._dashboardBtn = new St.Button({
+            style_class: 'cw-dashboard-btn',
+            can_focus: true,
+            tooltip_text: _('Dashboard'),
+            child: new St.Icon({icon_name: 'view-list-symbolic', icon_size: 16}),
+        });
+        box.add_child(this._dashboardBtn);
+
         this.add_child(box);
 
         this._buildMenu();
+        this._buildDashboardPopup();
         this._refresh();
 
         this._refreshTimer = GLib.timeout_add_seconds(
@@ -155,6 +168,15 @@ class CodewhaleIndicator extends PanelMenu.Button {
         });
         this.menu.addMenuItem(historyItem);
 
+        const settingsItem = new PopupMenu.PopupMenuItem(_('Settings…'));
+        settingsItem.insert_child_at_index(new St.Icon({
+            icon_name: 'preferences-system-symbolic',
+            icon_size: 16,
+            style_class: 'cw-item-icon',
+        }), 0);
+        settingsItem.connect('activate', () => this._openSettings());
+        this.menu.addMenuItem(settingsItem);
+
         this._menuOpenId = this.menu.connect('open-state-changed', (menu, open) => {
             if (!open)
                 return;
@@ -192,6 +214,216 @@ class CodewhaleIndicator extends PanelMenu.Button {
         } catch (e) {
             logError(e, 'codewhale-launcher: failed to launch process');
             Main.notifyError('Codewhale Launcher', fmt(_('Launch failed: %s'), e.message));
+        }
+    }
+
+    _buildDashboardPopup() {
+        this._dashboardPopup = new PopupMenu.PopupMenu(
+            this._dashboardBtn, 0.5, St.Side.TOP);
+        this._dashboardPopupManager = new PopupMenu.PopupMenuManager(this);
+        this._dashboardPopupManager.addMenu(this._dashboardPopup);
+
+        const headerItem = new PopupMenu.PopupBaseMenuItem({reactive: false, can_focus: false});
+        const headerBox = new St.BoxLayout({style_class: 'cw-header', x_expand: true});
+        this._dashboardTitle = new St.Label({
+            text: _('Dashboard'),
+            style_class: 'cw-header-title',
+            x_expand: true,
+            y_align: Clutter.ActorAlign.CENTER,
+        });
+        headerBox.add_child(this._dashboardTitle);
+        this._dashboardUpdated = new St.Label({
+            text: '',
+            style_class: 'cw-header-updated',
+            y_align: Clutter.ActorAlign.CENTER,
+        });
+        headerBox.add_child(this._dashboardUpdated);
+        const refreshBtn = new St.Button({
+            style_class: 'cw-refresh-btn',
+            child: new St.Icon({icon_name: 'view-refresh-symbolic', icon_size: 14}),
+        });
+        refreshBtn.connect('clicked', () => this._loadDashboard(true));
+        headerBox.add_child(refreshBtn);
+        headerItem.add_child(headerBox);
+        this._dashboardPopup.addMenuItem(headerItem);
+
+        this._dashboardStatus = new PopupMenu.PopupMenuSection();
+        this._dashboardPopup.addMenuItem(this._dashboardStatus);
+
+        this._dashboardPopup.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
+
+        const settingsItem = new PopupMenu.PopupMenuItem(_('Dashboard settings…'));
+        settingsItem.insert_child_at_index(new St.Icon({
+            icon_name: 'preferences-system-symbolic',
+            icon_size: 16,
+            style_class: 'cw-item-icon',
+        }), 0);
+        settingsItem.connect('activate', () => {
+            this._dashboardPopup.close();
+            this._openSettings();
+        });
+        this._dashboardPopup.addMenuItem(settingsItem);
+
+        this._dashboardBtn.connect('button-press-event', (actor, event) => {
+            if (event.get_button() === Clutter.BUTTON_PRIMARY) {
+                this._toggleDashboardPopup();
+                return Clutter.EVENT_STOP;
+            }
+            return Clutter.EVENT_PROPAGATE;
+        });
+    }
+
+    _toggleDashboardPopup() {
+        if (this._dashboardPopup.isOpen) {
+            this._dashboardPopup.close();
+            return;
+        }
+        this._dashboardPopup.open();
+        this._loadDashboard(false);
+    }
+
+    _loadDashboard(force) {
+        if (this._dashboardLoading)
+            return;
+        this._dashboardLoading = true;
+        this._renderDashboardState(_('Generating…'));
+
+        const session = this._settings.get_string('favorite-session');
+        const prompt = this._settings.get_string('dashboard-prompt');
+        const maxAge = this._settings.get_int('dashboard-max-age');
+
+        const argv = [
+            '/usr/bin/python3', `${this._extension.path}/helper/dashboard.py`,
+            '--session', session,
+            '--prompt', prompt,
+            '--max-age', String(maxAge),
+        ];
+        if (force)
+            argv.push('--force');
+
+        let proc;
+        try {
+            proc = Gio.Subprocess.new(
+                argv, Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE);
+        } catch (e) {
+            logError(e, 'codewhale-launcher: failed to start dashboard helper');
+            this._dashboardLoading = false;
+            this._renderDashboardState(fmt(_('Dashboard failed: %s'), e.message));
+            return;
+        }
+
+        proc.communicate_utf8_async(null, null, (source, res) => {
+            this._dashboardLoading = false;
+            try {
+                const [, stdout, stderr] = source.communicate_utf8_finish(res);
+                const data = JSON.parse(stdout ?? '');
+                this._renderDashboard(data);
+            } catch (e) {
+                logError(e, 'codewhale-launcher: unreadable dashboard output');
+                this._renderDashboardState(fmt(_('Dashboard failed: %s'), e.message));
+            }
+        });
+    }
+
+    _renderDashboardState(message) {
+        this._dashboardUpdated.set_text('');
+        this._dashboardStatus.removeAll();
+        this._dashboardStatus.addMenuItem(new PopupMenu.PopupMenuItem(
+            message, {reactive: false}));
+    }
+
+    _renderDashboard(data) {
+        this._dashboardStatus.removeAll();
+
+        if (data.status === 'no-session') {
+            this._dashboardUpdated.set_text('');
+            this._dashboardStatus.addMenuItem(new PopupMenu.PopupMenuItem(
+                _('Star a session in the menu to select the dashboard source'),
+                {reactive: false}));
+            return;
+        }
+        if (data.status === 'session-not-found') {
+            this._dashboardUpdated.set_text('');
+            this._dashboardStatus.addMenuItem(new PopupMenu.PopupMenuItem(
+                _('The favorite session no longer exists — pick another one'),
+                {reactive: false}));
+            return;
+        }
+        if (data.status === 'error') {
+            this._dashboardUpdated.set_text('');
+            this._dashboardStatus.addMenuItem(new PopupMenu.PopupMenuItem(
+                fmt(_('Dashboard failed: %s'), data.error ?? 'unknown'),
+                {reactive: false}));
+            return;
+        }
+
+        const item = new PopupMenu.PopupBaseMenuItem({reactive: false, can_focus: false});
+        const label = new St.Label({text: data.text ?? '', style_class: 'cw-dashboard-text'});
+        label.clutter_text.line_wrap = true;
+        item.add_child(label);
+        this._dashboardStatus.addMenuItem(item);
+
+        if (data.stale)
+            this._dashboardUpdated.set_text(_('stale'));
+        else if (data.fresh)
+            this._dashboardUpdated.set_text(_('just now'));
+        else
+            this._dashboardUpdated.set_text(relativeAge(data.generated_at));
+    }
+
+    _renderSessions() {
+        this._sessionsSection.removeAll();
+        const sessions = this._lastSessions ?? [];
+        const favorite = this._settings.get_string('favorite-session');
+        if (sessions.length === 0) {
+            this._sessionsSection.addMenuItem(new PopupMenu.PopupMenuItem(
+                _('No saved sessions'), {reactive: false}));
+            return;
+        }
+        for (const session of sessions) {
+            const item = new PopupMenu.PopupMenuItem(
+                truncate(session.title, TITLE_MAX_CHARS));
+            item.add_child(new St.Label({
+                text: `${shortWorkspace(session.workspace)} · ${relativeAge(session.updated_epoch)}`,
+                style_class: 'cw-session-meta',
+                y_align: Clutter.ActorAlign.CENTER,
+                x_expand: true,
+                x_align: Clutter.ActorAlign.END,
+            }));
+            const star = new St.Button({
+                style_class: 'cw-star-btn',
+                can_focus: true,
+                tooltip_text: _('Set as dashboard source'),
+                child: new St.Icon({
+                    icon_name: session.id === favorite ? 'starred-symbolic' : 'non-starred-symbolic',
+                    icon_size: 14,
+                }),
+            });
+            star.connect('button-press-event', (actor, event) => {
+                if (event.get_button() === Clutter.BUTTON_PRIMARY) {
+                    this._toggleFavorite(session.id);
+                    return Clutter.EVENT_STOP;
+                }
+                return Clutter.EVENT_PROPAGATE;
+            });
+            item.add_child(star);
+            item.connect('activate', () => this._resumeSession(session));
+            this._sessionsSection.addMenuItem(item);
+        }
+    }
+
+    _toggleFavorite(sessionId) {
+        const current = this._settings.get_string('favorite-session');
+        this._settings.set_string('favorite-session', current === sessionId ? '' : sessionId);
+        this._renderSessions();
+    }
+
+    _openSettings() {
+        this.menu.close();
+        try {
+            this._extension.openPreferences();
+        } catch (e) {
+            logError(e, 'codewhale-launcher: failed to open preferences');
         }
     }
 
@@ -255,25 +487,8 @@ class CodewhaleIndicator extends PanelMenu.Button {
         this._costLabel.set_text(fmt(_('Today: %s · 7 days: %s'),
             formatUsd(data.cost_today_usd), formatUsd(data.cost_week_usd)));
 
-        this._sessionsSection.removeAll();
-        const sessions = data.sessions ?? [];
-        if (sessions.length === 0) {
-            this._sessionsSection.addMenuItem(new PopupMenu.PopupMenuItem(
-                _('No saved sessions'), {reactive: false}));
-        }
-        for (const session of sessions) {
-            const item = new PopupMenu.PopupMenuItem(
-                truncate(session.title, TITLE_MAX_CHARS));
-            item.add_child(new St.Label({
-                text: `${shortWorkspace(session.workspace)} · ${relativeAge(session.updated_epoch)}`,
-                style_class: 'cw-session-meta',
-                y_align: Clutter.ActorAlign.CENTER,
-                x_expand: true,
-                x_align: Clutter.ActorAlign.END,
-            }));
-            item.connect('activate', () => this._resumeSession(session));
-            this._sessionsSection.addMenuItem(item);
-        }
+        this._lastSessions = data.sessions ?? [];
+        this._renderSessions();
 
         this._updateHeaderAge();
     }
@@ -298,6 +513,11 @@ class CodewhaleIndicator extends PanelMenu.Button {
             this.menu.disconnect(this._menuOpenId);
             this._menuOpenId = null;
         }
+        if (this._dashboardPopup) {
+            this._dashboardPopup.destroy();
+            this._dashboardPopup = null;
+        }
+        this._dashboardPopupManager = null;
         super.destroy();
     }
 });

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.codewhale-launcher"
+          path="/org/gnome/shell/extensions/codewhale-launcher/">
+    <key name="favorite-session" type="s">
+      <default>''</default>
+      <summary>Favorite session</summary>
+      <description>The session whose workspace feeds the dashboard status. Set it by starring a session in the launcher menu.</description>
+    </key>
+    <key name="dashboard-prompt" type="s">
+      <default>'Summarize the current state of this workspace: what is in progress, what is open or overdue, and what needs attention next. Be concise, use short bullets. Read-only: do not create, edit, or delete any files. If nothing is configured here, say so plainly.'</default>
+      <summary>Dashboard prompt</summary>
+      <description>Prompt sent to `codewhale exec` to generate the dashboard status.</description>
+    </key>
+    <key name="dashboard-max-age" type="i">
+      <default>360</default>
+      <summary>Maximum cache age (minutes)</summary>
+      <description>Regenerate the dashboard when the cached status is older than this, even if the workspace has not changed.</description>
+    </key>
+  </schema>
+</schemalist>
