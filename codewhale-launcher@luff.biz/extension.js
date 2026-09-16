@@ -88,7 +88,6 @@ class CodewhaleIndicator extends PanelMenu.Button {
         this._dashboardBtn = new St.Button({
             style_class: 'cw-dashboard-btn',
             can_focus: true,
-            tooltip_text: _('Dashboard'),
             child: new St.Icon({icon_name: 'view-list-symbolic', icon_size: 16}),
         });
         box.add_child(this._dashboardBtn);
@@ -393,7 +392,6 @@ class CodewhaleIndicator extends PanelMenu.Button {
             const star = new St.Button({
                 style_class: 'cw-star-btn',
                 can_focus: true,
-                tooltip_text: _('Set as dashboard source'),
                 child: new St.Icon({
                     icon_name: session.id === favorite ? 'starred-symbolic' : 'non-starred-symbolic',
                     icon_size: 14,
