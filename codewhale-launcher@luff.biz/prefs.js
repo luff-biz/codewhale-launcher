@@ -6,6 +6,7 @@ import {ExtensionPreferences, gettext as _} from 'resource:///org/gnome/Shell/Ex
 
 export default class CodewhaleLauncherPreferences extends ExtensionPreferences {
     fillPreferencesWindow(window) {
+        window.set_default_size(720, 480);
         const settings = this.getSettings();
 
         const page = new Adw.PreferencesPage();
@@ -13,14 +14,16 @@ export default class CodewhaleLauncherPreferences extends ExtensionPreferences {
 
         const group = new Adw.PreferencesGroup({
             title: _('Dashboard'),
-            description: _('A compact “current status” of the favorite session’s workspace, generated with codewhale and cached to save tokens. Star a session in the launcher menu to choose the favorite.'),
+            description: _('A compact “current status” of a session’s workspace, generated with codewhale and cached to save tokens. Open it from the dashboard button next to each session.'),
         });
         page.add(group);
 
-        const promptRow = new Adw.PreferencesRow({
+        const promptRow = new Adw.ActionRow({
             title: _('Status prompt'),
             subtitle: _('Sent to `codewhale exec`. Kept generic — the workspace’s own instructions define what “status” means.'),
         });
+        group.add(promptRow);
+
         const textView = new Gtk.TextView({
             hexpand: true,
             wrap_mode: Gtk.WrapMode.WORD_CHAR,
@@ -37,13 +40,13 @@ export default class CodewhaleLauncherPreferences extends ExtensionPreferences {
                 'dashboard-prompt',
                 buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter(), false));
         });
-        promptRow.set_child(new Gtk.ScrolledWindow({
+        const promptScroll = new Gtk.ScrolledWindow({
             child: textView,
             min_content_height: 120,
             max_content_height: 240,
             vexpand: true,
-        }));
-        group.add(promptRow);
+        });
+        group.add(promptScroll);
 
         const maxAgeRow = new Adw.SpinRow({
             title: _('Maximum cache age'),

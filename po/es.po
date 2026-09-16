@@ -119,3 +119,75 @@ msgstr "Quitar"
 #: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "Could not delete: %s"
 msgstr "No se pudo eliminar: %s"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Dashboard"
+msgstr "Panel"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Refresh"
+msgstr "Actualizar"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Settings"
+msgstr "Configuración"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Generating…"
+msgstr "Generando…"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "No session selected"
+msgstr "Ninguna sesión seleccionada"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "The session no longer exists"
+msgstr "La sesión ya no existe"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Dashboard failed: %s"
+msgstr "Error del panel: %s"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "(empty)"
+msgstr "(vacío)"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "stale"
+msgstr "obsoleto"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Updated: %s"
+msgstr "Actualizado: %s"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Dashboard settings"
+msgstr "Configuración del panel"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Status prompt"
+msgstr "Indicación de estado"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Maximum cache age (minutes)"
+msgstr "Edad máxima de caché (minutos)"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Save"
+msgstr "Guardar"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Maximum cache age"
+msgstr "Edad máxima de caché"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Minutes before the status is regenerated even if the workspace has not changed."
+msgstr "Minutos antes de que el estado se regenere aunque el espacio de trabajo no haya cambiado."
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "A compact “current status” of a session’s workspace, generated with codewhale and cached to save tokens. Open it from the dashboard button next to each session."
+msgstr "Un «estado actual» compacto del espacio de trabajo de una sesión, generado con codewhale y guardado en caché para ahorrar tokens. Ábrelo desde el botón del panel junto a cada sesión."
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Sent to `codewhale exec`. Kept generic — the workspace’s own instructions define what “status” means."
+msgstr "Se envía a `codewhale exec`. Se mantiene genérico: las instrucciones del propio espacio de trabajo definen qué significa «estado»."

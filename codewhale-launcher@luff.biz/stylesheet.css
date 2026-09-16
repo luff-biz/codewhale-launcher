@@ -53,25 +53,10 @@
 
 .cw-dashboard-btn {
     padding: 0 6px;
-    margin-left: 2px;
+    margin-left: 6px;
     border-radius: 6px;
 }
 
 .cw-dashboard-btn:hover {
-    background-color: rgba(255, 255, 255, 0.12);
-}
-
-.cw-dashboard-text {
-    font-size: 12px;
-    max-width: 340px;
-}
-
-.cw-star-btn {
-    padding: 2px 4px;
-    border-radius: 6px;
-    margin-left: 6px;
-}
-
-.cw-star-btn:hover {
     background-color: rgba(255, 255, 255, 0.12);
 }

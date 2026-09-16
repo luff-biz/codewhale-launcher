@@ -21,11 +21,12 @@ straight from the top bar — no opening a terminal, `cd`-ing into the project,
   with an explicit warning deletes it permanently from the store. Hidden
   sessions can be shown again and restored via the header toggle.
 - **Costs today / 7 days**: aggregated from the local Codewhale session store
-- **Dashboard**: a one-click “current status” of your favorite session's
-  workspace, generated with `codewhale exec` and cached to save tokens. Star a
-  session to choose the source; the status refreshes only when the workspace
-  changed or the cache is older than the maximum age (default 6 h) — or manually
-  via the refresh button. The prompt is fully configurable in the settings.
+- **Dashboard**: a one-click “current status” for any session, generated with
+  `codewhale exec` and cached to save tokens. Each session in the menu has its
+  own dashboard button that opens the status in a dedicated window; the cached
+  status is reused until it is older than the maximum age (default 6 h) — or
+  regenerated manually via the refresh button. The prompt is fully configurable
+  in the settings.
 - **Translated UI**: English plus 11 languages (de, fr, es, it, pt, nl, da, sv,
   nb, hi, zh_CN) — the language follows the GNOME system locale automatically
 
@@ -108,11 +109,12 @@ in the menu header.
 |---|---|
 | `extension.js` | UI: panel button, menu, process launches (GJS) |
 | `helper/panel-data.py` | data collection: provider from config, balance, costs, session list → one JSON on stdout |
-| `helper/dashboard.py` | dashboard: runs `codewhale exec`, caches the status, fingerprints the workspace → one JSON on stdout |
+| `helper/dashboard.py` | dashboard: runs `codewhale exec` and caches the status → one JSON on stdout |
 | `helper/store.py` | shared session-store access: list, hide/restore, delete |
 | `app/history.py` | GTK4/libadwaita full-history window (own process) |
+| `app/dashboard.py` | GTK4/libadwaita dashboard window (own process) |
 | `prefs.js` | settings window (dashboard prompt, max cache age) |
-| `schemas/` | GSettings schema (favorite session, prompt, max age) |
+| `schemas/` | GSettings schema (prompt, max age) |
 | `po/` | translations (gettext; compiled by `install.sh`) |
 | `stylesheet.css` | looks |
 
@@ -123,7 +125,7 @@ lives in the Python helper and can be tested on its own:
 python3 codewhale-launcher@luff.biz/helper/panel-data.py | python3 -m json.tool
 ```
 
-`helper/dashboard.py` works the same way; with no favorite session it just reports
+`helper/dashboard.py` works the same way; with no session id it just reports
 `no-session` (safe to run without touching `codewhale`):
 
 ```sh

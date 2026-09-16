@@ -119,3 +119,75 @@ msgstr "हटाएँ"
 #: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "Could not delete: %s"
 msgstr "हटाया नहीं जा सका: %s"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Dashboard"
+msgstr "डैशबोर्ड"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Refresh"
+msgstr "रीफ़्रेश"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Settings"
+msgstr "सेटिंग्स"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Generating…"
+msgstr "जनरेट हो रहा है…"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "No session selected"
+msgstr "कोई सत्र चयनित नहीं"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "The session no longer exists"
+msgstr "सत्र अब मौजूद नहीं है"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Dashboard failed: %s"
+msgstr "डैशबोर्ड विफल: %s"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "(empty)"
+msgstr "(खाली)"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "stale"
+msgstr "पुराना"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Updated: %s"
+msgstr "अद्यतित: %s"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Dashboard settings"
+msgstr "डैशबोर्ड सेटिंग्स"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Status prompt"
+msgstr "स्टेटस प्रॉम्प्ट"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Maximum cache age (minutes)"
+msgstr "कैश की अधिकतम आयु (मिनट)"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Save"
+msgstr "सहेजें"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Maximum cache age"
+msgstr "कैश की अधिकतम आयु"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Minutes before the status is regenerated even if the workspace has not changed."
+msgstr "कार्यक्षेत्र न बदला हो, तब भी स्थिति दोबारा बनने से पहले के मिनट।"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "A compact “current status” of a session’s workspace, generated with codewhale and cached to save tokens. Open it from the dashboard button next to each session."
+msgstr "सत्र के कार्यक्षेत्र का एक संक्षिप्त “वर्तमान स्थिति”, जिसे codewhale से बनाया गया है और टोकन बचाने के लिए कैश किया गया है। इसे हर सत्र के बगल वाले डैशबोर्ड बटन से खोलें।"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Sent to `codewhale exec`. Kept generic — the workspace’s own instructions define what “status” means."
+msgstr "`codewhale exec` को भेजा जाता है। इसे सामान्य रखा गया है — “स्थिति” का अर्थ कार्यक्षेत्र के अपने निर्देश तय करते हैं।"

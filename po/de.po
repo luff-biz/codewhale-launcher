@@ -119,3 +119,75 @@ msgstr "Entfernen"
 #: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "Could not delete: %s"
 msgstr "Löschen fehlgeschlagen: %s"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Refresh"
+msgstr "Aktualisieren"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Generating…"
+msgstr "Generiere…"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "No session selected"
+msgstr "Keine Session ausgewählt"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "The session no longer exists"
+msgstr "Die Session existiert nicht mehr"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Dashboard failed: %s"
+msgstr "Dashboard fehlgeschlagen: %s"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "(empty)"
+msgstr "(leer)"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "stale"
+msgstr "veraltet"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Updated: %s"
+msgstr "Stand: %s"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Dashboard settings"
+msgstr "Dashboard-Einstellungen"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Status prompt"
+msgstr "Status-Prompt"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Maximum cache age (minutes)"
+msgstr "Maximales Cache-Alter (Minuten)"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Save"
+msgstr "Speichern"
+
+#: codewhale-launcher@luff.biz/prefs.js
+msgid "A compact “current status” of a session’s workspace, generated with codewhale and cached to save tokens. Open it from the dashboard button next to each session."
+msgstr "Ein kompakter „aktueller Status“ des Workspace einer Session – mit Codewhale erzeugt und gecacht, um Tokens zu sparen. Öffnen über die Dashboard-Schaltfläche neben jeder Session."
+
+#: codewhale-launcher@luff.biz/prefs.js
+msgid "Sent to `codewhale exec`. Kept generic — the workspace’s own instructions define what “status” means."
+msgstr "Wird an `codewhale exec` gesendet. Bewusst generisch gehalten – die Anweisungen des jeweiligen Workspace definieren, was „Status“ bedeutet."
+
+#: codewhale-launcher@luff.biz/prefs.js
+msgid "Maximum cache age"
+msgstr "Maximales Cache-Alter"
+
+#: codewhale-launcher@luff.biz/prefs.js
+msgid "Minutes before the status is regenerated even if the workspace has not changed."
+msgstr "Minuten, bevor der Status neu erzeugt wird, auch wenn sich der Workspace nicht geändert hat."

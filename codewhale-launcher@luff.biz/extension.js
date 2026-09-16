@@ -68,7 +68,6 @@ class CodewhaleIndicator extends PanelMenu.Button {
         this._extension = extension;
         this._lastUpdate = null;
         this._refreshing = false;
-        this._dashboardLoading = false;
         this._lastSessions = null;
         this._settings = extension.getSettings();
 
@@ -85,17 +84,9 @@ class CodewhaleIndicator extends PanelMenu.Button {
         });
         box.add_child(this._panelLabel);
 
-        this._dashboardBtn = new St.Button({
-            style_class: 'cw-dashboard-btn',
-            can_focus: true,
-            child: new St.Icon({icon_name: 'view-list-symbolic', icon_size: 16}),
-        });
-        box.add_child(this._dashboardBtn);
-
         this.add_child(box);
 
         this._buildMenu();
-        this._buildDashboardPopup();
         this._refresh();
 
         this._refreshTimer = GLib.timeout_add_seconds(
@@ -132,8 +123,13 @@ class CodewhaleIndicator extends PanelMenu.Button {
 
         const statusItem = new PopupMenu.PopupBaseMenuItem({reactive: false, can_focus: false});
         const statusBox = new St.BoxLayout({vertical: true, style_class: 'cw-status-box', x_expand: true});
-        this._balanceLabel = new St.Label({text: fmt(_('Balance: %s'), '–'), style_class: 'cw-balance'});
+
+        this._balanceLabel = new St.Label({
+            text: fmt(_('Balance: %s'), '–'),
+            style_class: 'cw-balance',
+        });
         statusBox.add_child(this._balanceLabel);
+
         this._costLabel = new St.Label({text: fmt(_('Today: %s · 7 days: %s'), '–', '–'), style_class: 'cw-costs'});
         statusBox.add_child(this._costLabel);
         statusItem.add_child(statusBox);
@@ -192,7 +188,7 @@ class CodewhaleIndicator extends PanelMenu.Button {
         const title = GLib.shell_quote(_('Codewhale: choose a project directory'));
         const script =
             `dir=$(zenity --file-selection --directory --title=${title}) || exit 0; ` +
-            'exec ptyxis --new-window --working-directory "$dir" -- codewhale';
+            'exec ptyxis --standalone --working-directory "$dir" -- codewhale';
         this._spawn(['/bin/bash', '-lc', script]);
     }
 
@@ -202,7 +198,7 @@ class CodewhaleIndicator extends PanelMenu.Button {
         if (!dir || !GLib.file_test(dir, GLib.FileTest.IS_DIR))
             dir = GLib.get_home_dir();
         this._spawn([
-            'ptyxis', '--new-window', '--working-directory', dir,
+            'ptyxis', '--standalone', '--working-directory', dir,
             '--', 'codewhale', 'resume', session.id,
         ]);
     }
@@ -216,164 +212,15 @@ class CodewhaleIndicator extends PanelMenu.Button {
         }
     }
 
-    _buildDashboardPopup() {
-        this._dashboardPopup = new PopupMenu.PopupMenu(
-            this._dashboardBtn, 0.5, St.Side.TOP);
-        this._dashboardPopupManager = new PopupMenu.PopupMenuManager(this);
-        this._dashboardPopupManager.addMenu(this._dashboardPopup);
-
-        const headerItem = new PopupMenu.PopupBaseMenuItem({reactive: false, can_focus: false});
-        const headerBox = new St.BoxLayout({style_class: 'cw-header', x_expand: true});
-        this._dashboardTitle = new St.Label({
-            text: _('Dashboard'),
-            style_class: 'cw-header-title',
-            x_expand: true,
-            y_align: Clutter.ActorAlign.CENTER,
-        });
-        headerBox.add_child(this._dashboardTitle);
-        this._dashboardUpdated = new St.Label({
-            text: '',
-            style_class: 'cw-header-updated',
-            y_align: Clutter.ActorAlign.CENTER,
-        });
-        headerBox.add_child(this._dashboardUpdated);
-        const refreshBtn = new St.Button({
-            style_class: 'cw-refresh-btn',
-            child: new St.Icon({icon_name: 'view-refresh-symbolic', icon_size: 14}),
-        });
-        refreshBtn.connect('clicked', () => this._loadDashboard(true));
-        headerBox.add_child(refreshBtn);
-        headerItem.add_child(headerBox);
-        this._dashboardPopup.addMenuItem(headerItem);
-
-        this._dashboardStatus = new PopupMenu.PopupMenuSection();
-        this._dashboardPopup.addMenuItem(this._dashboardStatus);
-
-        this._dashboardPopup.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
-
-        const settingsItem = new PopupMenu.PopupMenuItem(_('Dashboard settings…'));
-        settingsItem.insert_child_at_index(new St.Icon({
-            icon_name: 'preferences-system-symbolic',
-            icon_size: 16,
-            style_class: 'cw-item-icon',
-        }), 0);
-        settingsItem.connect('activate', () => {
-            this._dashboardPopup.close();
-            this._openSettings();
-        });
-        this._dashboardPopup.addMenuItem(settingsItem);
-
-        this._dashboardBtn.connect('button-press-event', (actor, event) => {
-            if (event.get_button() === Clutter.BUTTON_PRIMARY) {
-                this._toggleDashboardPopup();
-                return Clutter.EVENT_STOP;
-            }
-            return Clutter.EVENT_PROPAGATE;
-        });
-    }
-
-    _toggleDashboardPopup() {
-        if (this._dashboardPopup.isOpen) {
-            this._dashboardPopup.close();
-            return;
-        }
-        this._dashboardPopup.open();
-        this._loadDashboard(false);
-    }
-
-    _loadDashboard(force) {
-        if (this._dashboardLoading)
-            return;
-        this._dashboardLoading = true;
-        this._renderDashboardState(_('Generating…'));
-
-        const session = this._settings.get_string('favorite-session');
-        const prompt = this._settings.get_string('dashboard-prompt');
-        const maxAge = this._settings.get_int('dashboard-max-age');
-
-        const argv = [
-            '/usr/bin/python3', `${this._extension.path}/helper/dashboard.py`,
-            '--session', session,
-            '--prompt', prompt,
-            '--max-age', String(maxAge),
-        ];
-        if (force)
-            argv.push('--force');
-
-        let proc;
-        try {
-            proc = Gio.Subprocess.new(
-                argv, Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE);
-        } catch (e) {
-            logError(e, 'codewhale-launcher: failed to start dashboard helper');
-            this._dashboardLoading = false;
-            this._renderDashboardState(fmt(_('Dashboard failed: %s'), e.message));
-            return;
-        }
-
-        proc.communicate_utf8_async(null, null, (source, res) => {
-            this._dashboardLoading = false;
-            try {
-                const [, stdout, stderr] = source.communicate_utf8_finish(res);
-                const data = JSON.parse(stdout ?? '');
-                this._renderDashboard(data);
-            } catch (e) {
-                logError(e, 'codewhale-launcher: unreadable dashboard output');
-                this._renderDashboardState(fmt(_('Dashboard failed: %s'), e.message));
-            }
-        });
-    }
-
-    _renderDashboardState(message) {
-        this._dashboardUpdated.set_text('');
-        this._dashboardStatus.removeAll();
-        this._dashboardStatus.addMenuItem(new PopupMenu.PopupMenuItem(
-            message, {reactive: false}));
-    }
-
-    _renderDashboard(data) {
-        this._dashboardStatus.removeAll();
-
-        if (data.status === 'no-session') {
-            this._dashboardUpdated.set_text('');
-            this._dashboardStatus.addMenuItem(new PopupMenu.PopupMenuItem(
-                _('Star a session in the menu to select the dashboard source'),
-                {reactive: false}));
-            return;
-        }
-        if (data.status === 'session-not-found') {
-            this._dashboardUpdated.set_text('');
-            this._dashboardStatus.addMenuItem(new PopupMenu.PopupMenuItem(
-                _('The favorite session no longer exists — pick another one'),
-                {reactive: false}));
-            return;
-        }
-        if (data.status === 'error') {
-            this._dashboardUpdated.set_text('');
-            this._dashboardStatus.addMenuItem(new PopupMenu.PopupMenuItem(
-                fmt(_('Dashboard failed: %s'), data.error ?? 'unknown'),
-                {reactive: false}));
-            return;
-        }
-
-        const item = new PopupMenu.PopupBaseMenuItem({reactive: false, can_focus: false});
-        const label = new St.Label({text: data.text ?? '', style_class: 'cw-dashboard-text'});
-        label.clutter_text.line_wrap = true;
-        item.add_child(label);
-        this._dashboardStatus.addMenuItem(item);
-
-        if (data.stale)
-            this._dashboardUpdated.set_text(_('stale'));
-        else if (data.fresh)
-            this._dashboardUpdated.set_text(_('just now'));
-        else
-            this._dashboardUpdated.set_text(relativeAge(data.generated_at));
+    _openDashboard(sessionId) {
+        this.menu.close();
+        this._spawn(['/usr/bin/python3', `${this._extension.path}/app/dashboard.py`,
+                     '--session', sessionId]);
     }
 
     _renderSessions() {
         this._sessionsSection.removeAll();
         const sessions = this._lastSessions ?? [];
-        const favorite = this._settings.get_string('favorite-session');
         if (sessions.length === 0) {
             this._sessionsSection.addMenuItem(new PopupMenu.PopupMenuItem(
                 _('No saved sessions'), {reactive: false}));
@@ -389,31 +236,26 @@ class CodewhaleIndicator extends PanelMenu.Button {
                 x_expand: true,
                 x_align: Clutter.ActorAlign.END,
             }));
-            const star = new St.Button({
-                style_class: 'cw-star-btn',
+            const dashboard = new St.Button({
+                style_class: 'cw-dashboard-btn',
                 can_focus: true,
                 child: new St.Icon({
-                    icon_name: session.id === favorite ? 'starred-symbolic' : 'non-starred-symbolic',
+                    gicon: Gio.icon_new_for_string(
+                        `${this._extension.path}/icons/codewhale-symbolic.svg`),
                     icon_size: 14,
                 }),
             });
-            star.connect('button-press-event', (actor, event) => {
+            dashboard.connect('button-press-event', (actor, event) => {
                 if (event.get_button() === Clutter.BUTTON_PRIMARY) {
-                    this._toggleFavorite(session.id);
+                    this._openDashboard(session.id);
                     return Clutter.EVENT_STOP;
                 }
                 return Clutter.EVENT_PROPAGATE;
             });
-            item.add_child(star);
+            item.add_child(dashboard);
             item.connect('activate', () => this._resumeSession(session));
             this._sessionsSection.addMenuItem(item);
         }
-    }
-
-    _toggleFavorite(sessionId) {
-        const current = this._settings.get_string('favorite-session');
-        this._settings.set_string('favorite-session', current === sessionId ? '' : sessionId);
-        this._renderSessions();
     }
 
     _openSettings() {
@@ -511,11 +353,6 @@ class CodewhaleIndicator extends PanelMenu.Button {
             this.menu.disconnect(this._menuOpenId);
             this._menuOpenId = null;
         }
-        if (this._dashboardPopup) {
-            this._dashboardPopup.destroy();
-            this._dashboardPopup = null;
-        }
-        this._dashboardPopupManager = null;
         super.destroy();
     }
 });

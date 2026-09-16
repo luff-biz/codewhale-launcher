@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
 """Dashboard status generator for the Codewhale Launcher extension.
 
-Produces a cached "current status" for the favorite session's workspace by
+Produces a cached "current status" for a chosen session's workspace by
 running a single non-interactive Codewhale prompt:
 
     codewhale exec --auto --resume <session-id> --output-format text "<prompt>"
 
-The result is cached under the launcher cache directory. Staleness is decided
-by a cheap workspace fingerprint (newest mtime of the workspace, or the git
-HEAD when the workspace is a repository) together with a maximum age. The
-extension calls this helper on demand (when the dashboard opens) and passes the
-settings as arguments; this file knows nothing about the launcher's settings
-store and nothing about any particular workspace layout.
+The result is cached under the launcher cache directory, keyed by session and
+prompt, and is reused until the maximum age elapses (or the caller passes
+--force). The extension calls this helper on demand (when the dashboard opens)
+and passes the settings as arguments; this file knows nothing about the
+launcher's settings store and nothing about any particular workspace layout.
 
 Prints exactly one JSON object to stdout, always. On success:
 
@@ -36,50 +35,11 @@ import store
 
 CACHE_DIR = Path(os.environ.get("XDG_CACHE_HOME", "") or Path.home() / ".cache") / "codewhale-launcher"
 CACHE_PATH = CACHE_DIR / "dashboard.json"
-SCAN_LIMIT = 200_000   # bound the fingerprint walk so huge workspaces stay cheap
 EXEC_TIMEOUT = 300     # seconds; a status run reads the workspace and answers
 
 
 def prompt_hash(prompt):
     return hashlib.sha256(prompt.encode("utf-8")).hexdigest()[:16]
-
-
-def workspace_fingerprint(workspace):
-    """A cheap, stable fingerprint of a workspace.
-
-    For a git repository the HEAD commit is used (fast and precise). Otherwise
-    the newest mtime plus the file count is used — good enough to catch the
-    common cases (new, changed, or removed files); an in-place edit of an old
-    file that leaves the newest mtime untouched is the known blind spot, and
-    the max-age and the manual refresh cover it.
-    """
-    if os.path.isdir(os.path.join(workspace, ".git")):
-        try:
-            head = subprocess.run(
-                ["git", "-C", workspace, "rev-parse", "HEAD"],
-                capture_output=True, text=True, timeout=10,
-            ).stdout.strip()
-            if head:
-                return f"git:{head}"
-        except (OSError, subprocess.SubprocessError):
-            pass
-
-    newest = 0
-    count = 0
-    try:
-        for root, _dirs, files in os.walk(workspace):
-            for name in files:
-                try:
-                    st = os.lstat(os.path.join(root, name))
-                    newest = max(newest, st.st_mtime_ns)
-                    count += 1
-                except OSError:
-                    continue
-                if count > SCAN_LIMIT:
-                    return f"mtime:{newest}:{count}"
-    except OSError:
-        pass
-    return f"mtime:{newest}:{count}"
 
 
 def load_cache():
@@ -142,17 +102,17 @@ def main():
         return
 
     phash = prompt_hash(args.prompt)
-    fingerprint = workspace_fingerprint(workspace)
     now = time.time()
 
     cache = load_cache()
+    age = now - cache.get("generated_at", 0) if cache else None
     usable = (
         not args.force
         and cache is not None
         and cache.get("session_id") == args.session
         and cache.get("prompt_hash") == phash
-        and cache.get("fingerprint") == fingerprint
-        and now - cache.get("generated_at", 0) < args.max_age * 60
+        and age is not None
+        and age < args.max_age * 60
     )
 
     if usable:
@@ -191,7 +151,6 @@ def main():
     entry = {
         "session_id": args.session,
         "prompt_hash": phash,
-        "fingerprint": fingerprint,
         "generated_at": now,
         "text": text,
     }

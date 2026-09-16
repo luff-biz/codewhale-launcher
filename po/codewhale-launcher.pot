@@ -118,3 +118,79 @@ msgstr ""
 #: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/history.py
 msgid "Could not delete: %s"
 msgstr ""
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Dashboard"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Generating…"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "No session selected"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "The session no longer exists"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Dashboard failed: %s"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Refresh"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Settings"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Updated: %s"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "stale"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "(empty)"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Dashboard settings"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Status prompt"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Maximum cache age (minutes)"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Save"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/extension.js
+msgid "Settings…"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/prefs.js
+msgid "A compact “current status” of a session’s workspace, generated with codewhale and cached to save tokens. Open it from the dashboard button next to each session."
+msgstr ""
+
+#: codewhale-launcher@luff.biz/prefs.js
+msgid "Sent to `codewhale exec`. Kept generic — the workspace’s own instructions define what “status” means."
+msgstr ""
+
+#: codewhale-launcher@luff.biz/prefs.js
+msgid "Maximum cache age"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/prefs.js
+msgid "Minutes before the status is regenerated even if the workspace has not changed."
+msgstr ""
