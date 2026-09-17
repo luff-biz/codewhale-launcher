@@ -192,26 +192,23 @@ msgstr "Um “estado atual” compacto do espaço de trabalho de uma sessão, ge
 msgid "Sent to `codewhale exec`. Kept generic — the workspace’s own instructions define what “status” means."
 msgstr "Enviado para `codewhale exec`. Mantido genérico — as instruções do próprio espaço de trabalho definem o que «estado» significa."
 
-#: codewhale-launcher@luff.biz/app/dashboard.py
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/about.py
 msgid "About Codewhale Launcher"
 msgstr "Sobre o Codewhale Launcher"
 
-#: codewhale-launcher@luff.biz/app/dashboard.py
-msgid "Main Menu"
-msgstr "Menu principal"
 
 #: codewhale-launcher@luff.biz/app/dashboard.py
 msgid "Start and resume Codewhale sessions straight from the top bar — one-click new sessions, recent sessions, balance and costs, and a per-session dashboard. No terminal required."
 msgstr "Inicie e retome sessões do Codewhale diretamente da barra superior: novas sessões com um clique, sessões recentes, saldo e custos, e um painel por sessão. Sem necessidade de terminal."
 
-#: codewhale-launcher@luff.biz/app/dashboard.py
+#: codewhale-launcher@luff.biz/app/about.py
 msgid "Source Code"
 msgstr "Código-fonte"
 
-#: codewhale-launcher@luff.biz/app/dashboard.py
+#: codewhale-launcher@luff.biz/app/about.py
 msgid "Buy Me a Coffee"
 msgstr "Pague-me um café"
 
-#: codewhale-launcher@luff.biz/app/dashboard.py
+#: codewhale-launcher@luff.biz/app/about.py
 msgid "More Apps"
 msgstr "Mais aplicações"

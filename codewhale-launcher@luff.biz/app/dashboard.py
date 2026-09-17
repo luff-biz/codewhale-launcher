@@ -94,20 +94,9 @@ class DashboardWindow(Adw.ApplicationWindow):
                                  tooltip_text=_("Refresh"), css_classes=["flat"])
         refresh_btn.connect("clicked", self._on_refresh)
 
-        about_action = Gio.SimpleAction.new("about", None)
-        about_action.connect("activate", lambda *_: self._show_about())
-        self.add_action(about_action)
-
-        menu = Gio.Menu()
-        menu.append(_("About Codewhale Launcher"), "win.about")
-        menu_btn = Gtk.MenuButton(icon_name="open-menu-symbolic",
-                                  tooltip_text=_("Main Menu"),
-                                  menu_model=menu, css_classes=["flat"])
-
         header = Adw.HeaderBar()
         header.pack_end(self._updated)
         header.pack_end(refresh_btn)
-        header.pack_end(menu_btn)
 
         self._text = Gtk.Label(wrap=True, selectable=True,
                                xalign=0, valign=Gtk.Align.START,
@@ -184,22 +173,6 @@ class DashboardWindow(Adw.ApplicationWindow):
 
     def _on_refresh(self, _button):
         self._generate(force=True)
-
-    def _show_about(self):
-        about = Adw.AboutDialog(
-            application_name="Codewhale Launcher",
-            application_icon="codewhale-launcher",
-            developer_name="Steffen Luff",
-            version="2",
-            comments=_("Start and resume Codewhale sessions straight from the top bar — one-click new sessions, recent sessions, balance and costs, and a per-session dashboard. No terminal required."),
-            issue_url="https://github.com/luff-biz/codewhale-launcher/issues",
-            copyright="© 2026 Steffen Luff",
-            license_type=Gtk.License.GPL_3_0,
-        )
-        about.add_link(_("Source Code"), "https://github.com/luff-biz/codewhale-launcher")
-        about.add_link(_("Buy Me a Coffee"), "https://ko-fi.com/steffenluff")
-        about.add_link(_("More Apps"), "https://github.com/steffenluff")
-        about.present(self)
 
 
 class DashboardApp(Adw.Application):

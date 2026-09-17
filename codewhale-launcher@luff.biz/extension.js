@@ -172,6 +172,18 @@ class CodewhaleIndicator extends PanelMenu.Button {
         settingsItem.connect('activate', () => this._openSettings());
         this.menu.addMenuItem(settingsItem);
 
+        const aboutItem = new PopupMenu.PopupMenuItem(_('About Codewhale Launcher'));
+        aboutItem.insert_child_at_index(new St.Icon({
+            icon_name: 'help-about-symbolic',
+            icon_size: 16,
+            style_class: 'cw-item-icon',
+        }), 0);
+        aboutItem.connect('activate', () => {
+            this.menu.close();
+            this._spawn(['/usr/bin/python3', `${this._extension.path}/app/about.py`]);
+        });
+        this.menu.addMenuItem(aboutItem);
+
         this._menuOpenId = this.menu.connect('open-state-changed', (menu, open) => {
             if (!open)
                 return;

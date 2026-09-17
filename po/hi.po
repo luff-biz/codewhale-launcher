@@ -192,26 +192,23 @@ msgstr "सत्र के कार्यक्षेत्र का एक �
 msgid "Sent to `codewhale exec`. Kept generic — the workspace’s own instructions define what “status” means."
 msgstr "`codewhale exec` को भेजा जाता है। इसे सामान्य रखा गया है — “स्थिति” का अर्थ कार्यक्षेत्र के अपने निर्देश तय करते हैं।"
 
-#: codewhale-launcher@luff.biz/app/dashboard.py
+#: codewhale-launcher@luff.biz/extension.js codewhale-launcher@luff.biz/app/about.py
 msgid "About Codewhale Launcher"
 msgstr "Codewhale Launcher के बारे में"
 
-#: codewhale-launcher@luff.biz/app/dashboard.py
-msgid "Main Menu"
-msgstr "मुख्य मेनू"
 
 #: codewhale-launcher@luff.biz/app/dashboard.py
 msgid "Start and resume Codewhale sessions straight from the top bar — one-click new sessions, recent sessions, balance and costs, and a per-session dashboard. No terminal required."
 msgstr "Codewhale सत्रों को सीधे शीर्ष पट्टी से शुरू करें और फिर से शुरू करें – एक क्लिक में नए सत्र, हाल के सत्र, शेष राशि और लागत, और हर सत्र के लिए एक डैशबोर्ड। किसी टर्मिनल की आवश्यकता नहीं।"
 
-#: codewhale-launcher@luff.biz/app/dashboard.py
+#: codewhale-launcher@luff.biz/app/about.py
 msgid "Source Code"
 msgstr "स्रोत कोड"
 
-#: codewhale-launcher@luff.biz/app/dashboard.py
+#: codewhale-launcher@luff.biz/app/about.py
 msgid "Buy Me a Coffee"
 msgstr "मुझे कॉफ़ी खिलाइए"
 
-#: codewhale-launcher@luff.biz/app/dashboard.py
+#: codewhale-launcher@luff.biz/app/about.py
 msgid "More Apps"
 msgstr "और ऐप्स"
