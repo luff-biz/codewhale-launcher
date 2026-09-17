@@ -48,6 +48,16 @@ export default class CodewhaleLauncherPreferences extends ExtensionPreferences {
         });
         group.add(promptScroll);
 
+        const resetRow = new Adw.ButtonRow({
+            title: _('Reset prompt to default'),
+            start_icon_name: 'edit-undo-symbolic',
+        });
+        resetRow.connect('activated', () => {
+            settings.reset('dashboard-prompt');
+            buffer.set_text(settings.get_string('dashboard-prompt'), -1);
+        });
+        group.add(resetRow);
+
         const maxAgeRow = new Adw.SpinRow({
             title: _('Maximum cache age'),
             subtitle: _('Minutes before the status is regenerated even if the workspace has not changed.'),
@@ -62,5 +72,19 @@ export default class CodewhaleLauncherPreferences extends ExtensionPreferences {
         settings.bind('dashboard-max-age', maxAgeRow, 'value',
             Gio.SettingsBindFlags.DEFAULT);
         group.add(maxAgeRow);
+
+        const aiRow = new Adw.SwitchRow({
+            title: _('AI dashboard'),
+            subtitle: _('Costs tokens — the status is generated with codewhale (LLM).'),
+        });
+        settings.bind('dashboard-ai', aiRow, 'active', Gio.SettingsBindFlags.DEFAULT);
+        group.add(aiRow);
+
+        const detRow = new Adw.ActionRow({
+            title: _('Deterministic mode'),
+            subtitle: _('Without AI the status is built directly from the workspace — CLAUDE.md, git status and recently changed files — without tokens.'),
+        });
+        detRow.set_activatable(false);
+        group.add(detRow);
     }
 }

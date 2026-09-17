@@ -208,3 +208,67 @@ msgstr "设置…"
 #: codewhale-launcher@luff.biz/app/dashboard.py
 msgid "Resume session"
 msgstr "恢复会话"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Reset prompt to default"
+msgstr "将提示重置为默认值"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "AI dashboard"
+msgstr "AI 仪表板"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Costs tokens — the status is generated with codewhale (LLM)."
+msgstr "消耗令牌——状态由 codewhale（LLM）生成。"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Deterministic mode"
+msgstr "确定性模式"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Without AI the status is built directly from the workspace — CLAUDE.md, git status and recently changed files — without tokens."
+msgstr "不使用 AI 时，状态直接从工作区构建——CLAUDE.md、git 状态和最近更改的文件——无需令牌。"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Status"
+msgstr "状态"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "deterministic — no tokens"
+msgstr "确定性 – 无需令牌"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Workspace"
+msgstr "工作区"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "CLAUDE.md"
+msgstr "CLAUDE.md"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "present"
+msgstr "存在"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "missing"
+msgstr "缺失"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Git"
+msgstr "Git"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "branch"
+msgstr "分支"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "uncommitted"
+msgstr "未提交"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Recently changed"
+msgstr "最近更改"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "deterministic"
+msgstr "确定性"

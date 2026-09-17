@@ -208,3 +208,67 @@ msgstr "Innstillinger…"
 #: codewhale-launcher@luff.biz/app/dashboard.py
 msgid "Resume session"
 msgstr "Gjenoppta økt"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Reset prompt to default"
+msgstr "Tilbakestill prompt til standard"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "AI dashboard"
+msgstr "AI-instrumentbord"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Costs tokens — the status is generated with codewhale (LLM)."
+msgstr "Koster tokens – statusen genereres med codewhale (LLM)."
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Deterministic mode"
+msgstr "Deterministisk modus"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Without AI the status is built directly from the workspace — CLAUDE.md, git status and recently changed files — without tokens."
+msgstr "Uten AI bygges statusen direkte fra arbeidsområdet – CLAUDE.md, git-status og nylig endrede filer – uten tokens."
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Status"
+msgstr "Status"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "deterministic — no tokens"
+msgstr "deterministisk – uten tokens"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Workspace"
+msgstr "Arbeidsområde"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "CLAUDE.md"
+msgstr "CLAUDE.md"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "present"
+msgstr "finnes"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "missing"
+msgstr "mangler"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Git"
+msgstr "Git"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "branch"
+msgstr "branch"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "uncommitted"
+msgstr "ikke-committede"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Recently changed"
+msgstr "Nylig endret"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "deterministic"
+msgstr "deterministisk"

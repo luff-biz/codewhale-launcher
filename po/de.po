@@ -208,3 +208,67 @@ msgstr "Einstellungen…"
 #: codewhale-launcher@luff.biz/app/dashboard.py
 msgid "Resume session"
 msgstr "Session fortsetzen"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Reset prompt to default"
+msgstr "Prompt auf Standard zurücksetzen"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "AI dashboard"
+msgstr "KI-Dashboard"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Costs tokens — the status is generated with codewhale (LLM)."
+msgstr "Kostet Tokens – der Status wird mit codewhale (LLM) erzeugt."
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Deterministic mode"
+msgstr "Deterministischer Modus"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Without AI the status is built directly from the workspace — CLAUDE.md, git status and recently changed files — without tokens."
+msgstr "Ohne KI wird der Status direkt aus dem Workspace gebaut – CLAUDE.md, Git-Status und zuletzt geänderte Dateien – ohne Tokens."
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Status"
+msgstr "Status"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "deterministic — no tokens"
+msgstr "deterministisch – ohne Tokens"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Workspace"
+msgstr "Workspace"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "CLAUDE.md"
+msgstr "CLAUDE.md"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "present"
+msgstr "vorhanden"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "missing"
+msgstr "fehlt"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Git"
+msgstr "Git"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "branch"
+msgstr "Branch"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "uncommitted"
+msgstr "uncommitted"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "Recently changed"
+msgstr "Zuletzt geändert"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
+msgid "deterministic"
+msgstr "deterministisch"

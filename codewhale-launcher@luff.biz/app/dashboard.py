@@ -125,6 +125,10 @@ class DashboardWindow(Adw.ApplicationWindow):
         self._text.set_markup(GLib.markup_escape_text(text))
 
     def _generate(self, force):
+        if not self._settings.get_boolean("dashboard-ai"):
+            self._show_deterministic()
+            return
+
         self._set_text(_("Generating…"))
         self._updated.set_text("")
 
@@ -198,6 +202,66 @@ class DashboardWindow(Adw.ApplicationWindow):
             "--", "codewhale", "resume", self._session_id,
         ], stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL)
+
+    def _recent_files(self, workspace, limit=5):
+        recent = []
+        count = 0
+        try:
+            for root, dirs, files in os.walk(workspace):
+                dirs[:] = [d for d in dirs if not d.startswith('.')]
+                for name in files:
+                    if name.startswith('.'):
+                        continue
+                    path = os.path.join(root, name)
+                    try:
+                        st = os.lstat(path)
+                    except OSError:
+                        continue
+                    recent.append((st.st_mtime, os.path.relpath(path, workspace)))
+                    count += 1
+                    if count > 20000:
+                        break
+                if count > 20000:
+                    break
+        except OSError:
+            pass
+        recent.sort(reverse=True)
+        return [name for _, name in recent[:limit]]
+
+    def _deterministic_summary(self):
+        workspace = self._session_workspace()
+        lines = [f"**{_('Status')}:** {_('deterministic — no tokens')}"]
+        lines.append("")
+        lines.append(f"**{_('Workspace')}:** {workspace}")
+        claude = os.path.join(workspace, "CLAUDE.md")
+        lines.append(
+            f"- **{_('CLAUDE.md')}:** "
+            f"{_('present') if os.path.isfile(claude) else _('missing')}")
+        if os.path.isdir(os.path.join(workspace, ".git")):
+            try:
+                branch = subprocess.run(
+                    ["git", "-C", workspace, "branch", "--show-current"],
+                    capture_output=True, text=True, timeout=10).stdout.strip()
+                out = subprocess.run(
+                    ["git", "-C", workspace, "status", "--porcelain"],
+                    capture_output=True, text=True, timeout=10).stdout
+                n = sum(1 for line in out.splitlines() if line.strip())
+                lines.append(
+                    f"- **{_('Git')}:** {_('branch')} {branch or '—'}, "
+                    f"{n} {_('uncommitted')}")
+            except (OSError, subprocess.SubprocessError):
+                pass
+        recent = self._recent_files(workspace)
+        if recent:
+            lines.append("")
+            lines.append(f"**{_('Recently changed')}:**")
+            for name in recent:
+                lines.append(f"- {name}")
+        return "\n".join(lines)
+
+    def _show_deterministic(self):
+        self._text.set_markup(markdown_to_pango(self._deterministic_summary()))
+        self._updated.set_text(_("deterministic"))
 
 
 class DashboardApp(Adw.Application):

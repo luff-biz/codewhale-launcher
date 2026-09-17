@@ -12,5 +12,10 @@
       <summary>Maximum cache age (minutes)</summary>
       <description>Regenerate the dashboard when the cached status is older than this, even if the workspace has not changed.</description>
     </key>
+    <key name="dashboard-ai" type="b">
+      <default>true</default>
+      <summary>AI dashboard</summary>
+      <description>Generate the dashboard status with codewhale (LLM), which costs tokens. When disabled, a deterministic, token-free summary is built from the workspace (CLAUDE.md, git status, recently changed files).</description>
+    </key>
   </schema>
 </schemalist>
