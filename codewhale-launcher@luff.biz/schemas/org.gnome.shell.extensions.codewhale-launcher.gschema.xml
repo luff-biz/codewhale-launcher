@@ -3,7 +3,7 @@
   <schema id="org.gnome.shell.extensions.codewhale-launcher"
           path="/org/gnome/shell/extensions/codewhale-launcher/">
     <key name="dashboard-prompt" type="s">
-      <default>'Summarize the current state of this workspace: what is in progress, what is open or overdue, and what needs attention next. Be concise, one short line per point. Plain text only — no markdown, no bullets, no bold, no headings. Read-only: do not create, edit, or delete any files. If nothing is configured here, say so plainly.'</default>
+      <default>'Summarize the current state of this workspace: what is in progress, what is open or overdue, and what needs attention next. Be concise, use short bullets and bold labels. Read-only: do not create, edit, or delete any files. If nothing is configured here, say so plainly.'</default>
       <summary>Dashboard prompt</summary>
       <description>Prompt sent to `codewhale exec` to generate the dashboard status.</description>
     </key>

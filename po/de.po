@@ -191,3 +191,27 @@ msgstr "Maximales Cache-Alter"
 #: codewhale-launcher@luff.biz/prefs.js
 msgid "Minutes before the status is regenerated even if the workspace has not changed."
 msgstr "Minuten, bevor der Status neu erzeugt wird, auch wenn sich der Workspace nicht geändert hat."
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "About Codewhale Launcher"
+msgstr "Über Codewhale Launcher"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Main Menu"
+msgstr "Hauptmenü"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Start and resume Codewhale sessions straight from the top bar — one-click new sessions, recent sessions, balance and costs, and a per-session dashboard. No terminal required."
+msgstr "Codewhale-Sessions direkt aus der oberen Leiste starten und fortsetzen – neue Sessions mit einem Klick, letzte Sessions, Guthaben und Kosten sowie ein Dashboard pro Session. Kein Terminal nötig."
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Source Code"
+msgstr "Quellcode"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Buy Me a Coffee"
+msgstr "Kaffee spendieren"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "More Apps"
+msgstr "Weitere Apps"

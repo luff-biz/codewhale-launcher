@@ -191,3 +191,27 @@ msgstr "En kompakt «nåværende status» for en økts arbeidsområde, generert 
 #: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
 msgid "Sent to `codewhale exec`. Kept generic — the workspace’s own instructions define what “status” means."
 msgstr "Sendes til `codewhale exec`. Holdes generisk — arbeidsområdets egne instruksjoner definerer hva «status» betyr."
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "About Codewhale Launcher"
+msgstr "Om Codewhale Launcher"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Main Menu"
+msgstr "Hovedmeny"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Start and resume Codewhale sessions straight from the top bar — one-click new sessions, recent sessions, balance and costs, and a per-session dashboard. No terminal required."
+msgstr "Start og gjenoppta Codewhale-økter rett fra toppanelet – nye økter med ett klikk, nylige økter, saldo og kostnader samt et instrumentbord per økt. Ingen terminal kreves."
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Source Code"
+msgstr "Kildekode"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Buy Me a Coffee"
+msgstr "Spondér en kaffe"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "More Apps"
+msgstr "Flere apper"

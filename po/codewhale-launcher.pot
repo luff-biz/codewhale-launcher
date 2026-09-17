@@ -194,3 +194,27 @@ msgstr ""
 #: codewhale-launcher@luff.biz/prefs.js
 msgid "Minutes before the status is regenerated even if the workspace has not changed."
 msgstr ""
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "About Codewhale Launcher"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Main Menu"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Start and resume Codewhale sessions straight from the top bar — one-click new sessions, recent sessions, balance and costs, and a per-session dashboard. No terminal required."
+msgstr ""
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Source Code"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Buy Me a Coffee"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "More Apps"
+msgstr ""
