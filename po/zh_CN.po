@@ -128,9 +128,6 @@ msgstr "仪表板"
 msgid "Refresh"
 msgstr "刷新"
 
-#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
-msgid "Settings"
-msgstr "设置"
 
 #: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
 msgid "Generating…"
@@ -160,21 +157,12 @@ msgstr "已过期"
 msgid "Updated: %s"
 msgstr "更新于：%s"
 
-#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
-msgid "Dashboard settings"
-msgstr "仪表板设置"
 
 #: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
 msgid "Status prompt"
 msgstr "状态提示"
 
-#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
-msgid "Maximum cache age (minutes)"
-msgstr "缓存最长保存时间（分钟）"
 
-#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
-msgid "Save"
-msgstr "保存"
 
 #: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
 msgid "Maximum cache age"
@@ -212,3 +200,11 @@ msgstr "请我喝杯咖啡"
 #: codewhale-launcher@luff.biz/app/about.py
 msgid "More Apps"
 msgstr "更多应用"
+
+#: codewhale-launcher@luff.biz/extension.js
+msgid "Settings…"
+msgstr "设置…"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Resume session"
+msgstr "恢复会话"

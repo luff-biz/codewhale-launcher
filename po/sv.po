@@ -128,9 +128,6 @@ msgstr "Instrumentpanel"
 msgid "Refresh"
 msgstr "Uppdatera"
 
-#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
-msgid "Settings"
-msgstr "Inställningar"
 
 #: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
 msgid "Generating…"
@@ -160,21 +157,12 @@ msgstr "inaktuell"
 msgid "Updated: %s"
 msgstr "Uppdaterad: %s"
 
-#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
-msgid "Dashboard settings"
-msgstr "Instrumentpanel-inställningar"
 
 #: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
 msgid "Status prompt"
 msgstr "Statusprompt"
 
-#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
-msgid "Maximum cache age (minutes)"
-msgstr "Maximal cacheålder (minuter)"
 
-#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
-msgid "Save"
-msgstr "Spara"
 
 #: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
 msgid "Maximum cache age"
@@ -212,3 +200,11 @@ msgstr "Bjud på en kaffe"
 #: codewhale-launcher@luff.biz/app/about.py
 msgid "More Apps"
 msgstr "Fler appar"
+
+#: codewhale-launcher@luff.biz/extension.js
+msgid "Settings…"
+msgstr "Inställningar…"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Resume session"
+msgstr "Återuppta session"

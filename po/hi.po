@@ -128,9 +128,6 @@ msgstr "डैशबोर्ड"
 msgid "Refresh"
 msgstr "रीफ़्रेश"
 
-#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
-msgid "Settings"
-msgstr "सेटिंग्स"
 
 #: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
 msgid "Generating…"
@@ -160,21 +157,12 @@ msgstr "पुराना"
 msgid "Updated: %s"
 msgstr "अद्यतित: %s"
 
-#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
-msgid "Dashboard settings"
-msgstr "डैशबोर्ड सेटिंग्स"
 
 #: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
 msgid "Status prompt"
 msgstr "स्टेटस प्रॉम्प्ट"
 
-#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
-msgid "Maximum cache age (minutes)"
-msgstr "कैश की अधिकतम आयु (मिनट)"
 
-#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
-msgid "Save"
-msgstr "सहेजें"
 
 #: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
 msgid "Maximum cache age"
@@ -212,3 +200,11 @@ msgstr "मुझे कॉफ़ी खिलाइए"
 #: codewhale-launcher@luff.biz/app/about.py
 msgid "More Apps"
 msgstr "और ऐप्स"
+
+#: codewhale-launcher@luff.biz/extension.js
+msgid "Settings…"
+msgstr "सेटिंग्स…"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Resume session"
+msgstr "सत्र फिर से शुरू करें"

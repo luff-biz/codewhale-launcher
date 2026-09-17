@@ -128,9 +128,6 @@ msgstr "Tableau de bord"
 msgid "Refresh"
 msgstr "Actualiser"
 
-#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
-msgid "Settings"
-msgstr "Paramètres"
 
 #: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
 msgid "Generating…"
@@ -160,21 +157,12 @@ msgstr "périmé"
 msgid "Updated: %s"
 msgstr "Mis à jour : %s"
 
-#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
-msgid "Dashboard settings"
-msgstr "Paramètres du tableau de bord"
 
 #: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
 msgid "Status prompt"
 msgstr "Invite de statut"
 
-#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
-msgid "Maximum cache age (minutes)"
-msgstr "Âge maximal du cache (minutes)"
 
-#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
-msgid "Save"
-msgstr "Enregistrer"
 
 #: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
 msgid "Maximum cache age"
@@ -212,3 +200,11 @@ msgstr "Offrez-moi un café"
 #: codewhale-launcher@luff.biz/app/about.py
 msgid "More Apps"
 msgstr "Plus d'applications"
+
+#: codewhale-launcher@luff.biz/extension.js
+msgid "Settings…"
+msgstr "Paramètres…"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Resume session"
+msgstr "Reprendre la session"

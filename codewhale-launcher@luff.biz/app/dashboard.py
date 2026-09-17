@@ -34,6 +34,9 @@ os.environ["GSETTINGS_SCHEMA_DIR"] = os.path.join(EXT_DIR, "schemas")
 
 _ = gettext.translation(UUID, os.path.join(EXT_DIR, "locale"), fallback=True).gettext
 
+sys.path.insert(0, os.path.join(EXT_DIR, "helper"))
+import store  # noqa: E402
+
 
 def relative_age(epoch_secs):
     diff = max(0, time.time() - epoch_secs)
@@ -94,7 +97,13 @@ class DashboardWindow(Adw.ApplicationWindow):
                                  tooltip_text=_("Refresh"), css_classes=["flat"])
         refresh_btn.connect("clicked", self._on_refresh)
 
+        resume_btn = Gtk.Button(label=_("Resume session"),
+                                icon_name="utilities-terminal-symbolic",
+                                css_classes=["suggested-action"])
+        resume_btn.connect("clicked", self._resume_session)
+
         header = Adw.HeaderBar()
+        header.pack_start(resume_btn)
         header.pack_end(self._updated)
         header.pack_end(refresh_btn)
 
@@ -173,6 +182,22 @@ class DashboardWindow(Adw.ApplicationWindow):
 
     def _on_refresh(self, _button):
         self._generate(force=True)
+
+    def _session_workspace(self):
+        for session in store.collect_sessions():
+            if session.get("id") == self._session_id:
+                return session.get("workspace") or os.path.expanduser("~")
+        return os.path.expanduser("~")
+
+    def _resume_session(self, _button=None):
+        workspace = self._session_workspace()
+        if not os.path.isdir(workspace):
+            workspace = os.path.expanduser("~")
+        subprocess.Popen([
+            "ptyxis", "--standalone", "--working-directory", workspace,
+            "--", "codewhale", "resume", self._session_id,
+        ], stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL)
 
 
 class DashboardApp(Adw.Application):

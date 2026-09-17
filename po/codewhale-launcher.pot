@@ -143,9 +143,6 @@ msgstr ""
 msgid "Refresh"
 msgstr ""
 
-#: codewhale-launcher@luff.biz/app/dashboard.py
-msgid "Settings"
-msgstr ""
 
 #: codewhale-launcher@luff.biz/app/dashboard.py
 msgid "Updated: %s"
@@ -159,21 +156,12 @@ msgstr ""
 msgid "(empty)"
 msgstr ""
 
-#: codewhale-launcher@luff.biz/app/dashboard.py
-msgid "Dashboard settings"
-msgstr ""
 
 #: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
 msgid "Status prompt"
 msgstr ""
 
-#: codewhale-launcher@luff.biz/app/dashboard.py
-msgid "Maximum cache age (minutes)"
-msgstr ""
 
-#: codewhale-launcher@luff.biz/app/dashboard.py
-msgid "Save"
-msgstr ""
 
 #: codewhale-launcher@luff.biz/extension.js
 msgid "Settings…"
@@ -214,4 +202,8 @@ msgstr ""
 
 #: codewhale-launcher@luff.biz/app/about.py
 msgid "More Apps"
+msgstr ""
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Resume session"
 msgstr ""

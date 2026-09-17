@@ -128,9 +128,6 @@ msgstr "Dashboard"
 msgid "Refresh"
 msgstr "Aggiorna"
 
-#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
-msgid "Settings"
-msgstr "Impostazioni"
 
 #: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
 msgid "Generating…"
@@ -160,21 +157,12 @@ msgstr "obsoleto"
 msgid "Updated: %s"
 msgstr "Aggiornato: %s"
 
-#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
-msgid "Dashboard settings"
-msgstr "Impostazioni del dashboard"
 
 #: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
 msgid "Status prompt"
 msgstr "Prompt di stato"
 
-#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
-msgid "Maximum cache age (minutes)"
-msgstr "Età massima della cache (minuti)"
 
-#: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
-msgid "Save"
-msgstr "Salva"
 
 #: codewhale-launcher@luff.biz/app/dashboard.py codewhale-launcher@luff.biz/prefs.js
 msgid "Maximum cache age"
@@ -212,3 +200,11 @@ msgstr "Offrimi un caffè"
 #: codewhale-launcher@luff.biz/app/about.py
 msgid "More Apps"
 msgstr "Altre app"
+
+#: codewhale-launcher@luff.biz/extension.js
+msgid "Settings…"
+msgstr "Impostazioni…"
+
+#: codewhale-launcher@luff.biz/app/dashboard.py
+msgid "Resume session"
+msgstr "Riprendi sessione"

@@ -24,7 +24,8 @@ class AboutApp(Adw.Application):
         super().__init__(application_id="biz.luff.CodewhaleLauncherAbout")
 
     def do_activate(self):
-        win = Adw.Window(application=self, title=_("About Codewhale Launcher"))
+        win = Adw.Window(application=self, title=_("About Codewhale Launcher"),
+                         default_width=420, default_height=560)
         win.connect("close-request", lambda *_: self.quit())
 
         about = Adw.AboutDialog(
